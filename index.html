@@ -98,18 +98,6 @@
       --focus-ring: rgba(91,33,182,0.20);
     }
 
-    html[data-theme="light"] .proj-badge {
-      color: var(--acc);
-      background: rgba(91,33,182,0.075);
-      border-color: rgba(91,33,182,0.18);
-    }
-
-    html[data-theme="light"] .ptag,
-    html[data-theme="light"] .feat {
-      background: rgba(91,33,182,0.055);
-      border-color: rgba(91,33,182,0.14);
-    }
-
     html[data-theme="light"] .field input,
     html[data-theme="light"] .field textarea {
       border-color: rgba(91,33,182,0.20);
@@ -122,6 +110,20 @@
     }
 
     html { scroll-behavior: smooth; }
+
+    /* Hide modal scrollbars while keeping touch/mouse scrolling */
+    .modal-backdrop,
+    .contact-modal {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .modal-backdrop::-webkit-scrollbar,
+    .contact-modal::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+      display: none;
+    }
 
     a:focus-visible,
     button:focus-visible,
@@ -140,7 +142,6 @@
       user-select: none;
       -webkit-user-select: none;
     }
-
 
     ::view-transition-old(root),
     ::view-transition-new(root) {
@@ -200,7 +201,6 @@
       opacity: 0.65;
       z-index: -1;
     }
-
 
     nav,
     section,
@@ -523,7 +523,6 @@
       }
     }
 
-
     /* TYPOGRAPHY */
     .tag {
       font-family: var(--font-head);
@@ -577,10 +576,10 @@
     .subrole {
       font-family: var(--font-head);
       font-size: 16px;
-      letter-spacing: 0.28em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--acc2);
-      margin-bottom: 14px;
+      margin-bottom: 28px;
     }
 
     .sub {
@@ -593,6 +592,7 @@
 
     /* BUTTONS */
     .btns { display: flex; gap: 12px; justify-content: center; }
+    .hero-btns-single .bp { min-width: 170px; }
 
     .bp {
       font-family: var(--font-head);
@@ -728,10 +728,24 @@
       outline-offset: 4px;
     }
 
-    .about-actions {
+    .setup-card {
+      width: 100%;
+      min-height: 106px;
       display: flex;
+      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      margin-top: 16px;
+      gap: 8px;
+    }
+
+    .setup-card-title {
+      font-family: var(--font-head);
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--acc);
+      line-height: 1;
     }
 
     .setup-btn {
@@ -770,10 +784,9 @@
 
     /* PROJECTS */
     .proj-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      max-width: 780px;
+      display: flex;
+      justify-content: center;
+      max-width: 580px;
       margin: 0 auto;
       width: 100%;
     }
@@ -812,21 +825,21 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 148px;
+      min-width: 142px;
       color: var(--btn-text);
-      background: linear-gradient(135deg, var(--acc3), var(--accent-blue-solid));
-      border: 0.5px solid rgba(255,255,255,0.16);
+      background: linear-gradient(135deg, rgba(124,58,237,0.92), rgba(37,99,235,0.92));
+      border: 0.5px solid rgba(255,255,255,0.12);
       border-radius: 7px;
-      padding: 13px 34px;
+      padding: 11px 30px;
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease, opacity 0.2s ease;
     }
 
     .buy-btn:hover,
     .buy-btn:focus-visible {
       transform: translateY(-2px);
-      filter: brightness(1.08);
-      box-shadow: 0 12px 30px rgba(124,58,237,0.24), 0 0 20px rgba(125,211,252,0.14);
+      filter: brightness(1.04);
+      box-shadow: 0 10px 24px rgba(124,58,237,0.16), 0 0 16px rgba(125,211,252,0.08);
     }
 
     .buy-btn:focus-visible {
@@ -843,31 +856,6 @@
         0 0 0 1px rgba(191,162,255,0.08);
     }
 
-    .proj-card.empty {
-      border-style: dashed;
-      opacity: 0.42;
-      align-items: center;
-      justify-content: center;
-      min-height: 200px;
-      cursor: default;
-    }
-
-    .proj-card.empty:hover { transform: none; border-color: var(--bdr); }
-
-    .proj-badge {
-      font-family: var(--font-head);
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--acc);
-      background: rgba(196,181,253,0.08);
-      border: 0.5px solid rgba(196,181,253,0.15);
-      border-radius: 2px;
-      padding: 3px 9px;
-      display: inline-block;
-      margin-bottom: 12px;
-    }
-
     .proj-title {
       font-family: var(--font-head);
       font-size: 28px;
@@ -875,7 +863,18 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--txt);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
+    }
+
+    .proj-subtitle {
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--acc2);
+      margin-bottom: 14px;
+      opacity: 0.9;
     }
 
     .proj-desc {
@@ -883,62 +882,42 @@
       font-weight: 300;
       line-height: 1.82;
       color: var(--txt2);
-      margin-bottom: 12px;
+      margin-bottom: 16px;
       flex: 1;
     }
 
-    .proj-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      margin-bottom: 12px;
-    }
-
-    .ptag {
-      font-family: var(--font-head);
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      background: var(--card2);
-      border: 0.5px solid var(--bdr);
-      border-radius: 2px;
-      padding: 3px 8px;
-      color: var(--txt2);
-    }
-
-    .feat-grid {
+    .feature-list {
+      list-style: none;
       display: grid;
       grid-template-columns: 1fr;
-      gap: 5px;
+      gap: 9px;
+      margin-top: 2px;
     }
 
-    .feat {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      padding: 7px 10px;
-      background: var(--card2);
-      border-radius: 3px;
-      border: 0.5px solid var(--bdr2);
-    }
-
-    .feat svg { flex-shrink: 0; margin-top: 1px; color: var(--icon); }
-
-    .feat-txt {
+    .feature-list li {
       font-family: var(--font-head);
-      font-size: 12px;
+      font-size: 13px;
+      font-weight: 500;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--txt2);
-      line-height: 1.4;
+      line-height: 1.35;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      background: transparent !important;
+      border: 0 !important;
+      box-shadow: none !important;
     }
 
-    .empty-lbl {
-      font-family: var(--font-head);
-      font-size: 13px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--txt3);
+    .feature-list li::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--icon);
+      opacity: 0.8;
+      flex: 0 0 auto;
     }
 
     /* CONTACT */
@@ -1006,8 +985,6 @@
       opacity: 0.8;
     }
 
-
-
     /* CONTACT MODAL */
     .modal-backdrop {
       position: fixed;
@@ -1038,6 +1015,7 @@
 
     .contact-modal {
       width: min(100%, 440px);
+      position: relative;
       max-height: calc(100vh - 44px);
       max-height: calc(100dvh - 44px);
       overflow-y: auto;
@@ -1062,10 +1040,12 @@
 
     .modal-top {
       display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
+      align-items: center;
+      justify-content: center;
       gap: 18px;
       margin-bottom: 18px;
+      padding: 4px 42px 0;
+      text-align: center;
     }
 
     .modal-title {
@@ -1088,14 +1068,20 @@
     }
 
     .modal-close {
-      width: 34px;
-      height: 34px;
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 4;
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
       border: 0.5px solid var(--bdr);
       border-radius: 8px;
       background: var(--input-bg);
       color: var(--txt2);
       cursor: pointer;
-      font-size: 20px;
+      font-size: 18px;
       line-height: 1;
       transition: all 0.2s ease;
     }
@@ -1174,35 +1160,34 @@
 
     .setup-modal {
       width: min(100%, 540px);
+      position: relative;
+      padding-top: 24px;
     }
 
     .setup-modal .modal-top {
-      position: relative;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      margin-bottom: 20px;
+      min-height: 0;
+      height: 0;
+      margin: 0;
+      padding: 0;
     }
 
     .setup-modal .modal-top > div {
       width: 100%;
     }
 
-    .setup-modal .modal-close {
-      position: absolute;
-      top: 0;
-      right: 0;
+    .setup-modal-top-minimal {
+      display: block;
     }
 
     .setup-tabs {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
-      margin: 2px 0 16px;
-      padding: 4px;
-      border: 0.5px solid var(--bdr2);
-      border-radius: 10px;
-      background: var(--input-bg);
+      margin: 0 0 16px 0;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+      background: transparent;
     }
 
     .setup-tab {
@@ -1294,7 +1279,6 @@
       text-align: right;
     }
 
-
     /* RESPONSIVE */
     @media (max-width: 768px) {
       nav {
@@ -1322,6 +1306,7 @@
       .theme-icon { width: 25px; height: 25px; font-size: 13px; }
       section { padding: 80px 24px; }
       h1 { font-size: 78px; }
+      .subrole { letter-spacing: 0.15em; }
       .proj-grid { grid-template-columns: 1fr; }
       .stat-row { max-width: 100%; }
       footer { padding: 20px 24px; }
@@ -1380,6 +1365,7 @@
         height: 12px;
         stroke-width: 2;
       }
+      .subrole { font-size: 15px; letter-spacing: 0.12em; margin-bottom: 24px; }
       .modal-backdrop {
         align-items: flex-start;
         justify-content: center;
@@ -1390,11 +1376,20 @@
         max-height: calc(100vh - 36px);
         max-height: calc(100dvh - 36px);
       }
+      .modal-close {
+        top: 12px;
+        right: 12px;
+        width: 30px;
+        height: 30px;
+        font-size: 17px;
+      }
       .setup-modal {
         width: min(100%, 520px);
+        padding-top: 18px;
       }
       .setup-tabs {
         gap: 6px;
+        margin: 0 0 14px 0;
       }
       .setup-tab {
         font-size: 11px;
@@ -1417,6 +1412,7 @@
 
     @media (max-width: 390px) {
       h1 { font-size: 58px; }
+      .subrole { font-size: 14px; letter-spacing: 0.10em; }
       nav { padding-left: 14px; padding-right: 14px; }
       .nav-right { min-height: 30px; }
       .nlinks { gap: 14px; }
@@ -1426,6 +1422,9 @@
       .theme-icon { width: 17px; height: 17px; }
       .theme-icon svg { width: 10.5px; height: 10.5px; stroke-width: 2; }
       .contact-modal { padding: 22px 16px; }
+      .setup-tabs {
+        margin: 22px 32px 14px 0;
+      }
       .spec-row {
         display: grid;
         grid-template-columns: 1fr;
@@ -1441,7 +1440,6 @@
 <body>
 
 <div id="progress"></div>
-
 
 <nav>
   <div class="nlogo" onclick="goTo('hero')" role="button" tabindex="0" onkeydown="if(event.key === 'Enter' || event.key === ' ') goTo('hero')">Daniel</div>
@@ -1469,11 +1467,9 @@
 <section id="hero">
   <div class="si" id="si-hero">
     <h1>HEY I'M<br><span>DANIEL</span></h1>
-    <div class="subrole">Gamer &nbsp;·&nbsp; Tech</div>
-    <p class="sub">figuring it out one line at a time.</p>
-    <div class="btns">
+    <div class="subrole">Gamer · Tech</div>
+    <div class="btns hero-btns-single">
       <button class="bp" onclick="goTo('projects')">My projects</button>
-      <button class="bg2" onclick="goTo('contact')">Say hi</button>
     </div>
   </div>
 </section>
@@ -1495,13 +1491,10 @@
         <div class="stat-num">1</div>
         <div class="stat-lbl">Projects</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-num">∞</div>
-        <div class="stat-lbl">Ideas</div>
+      <div class="stat-card setup-card clickable" onclick="openSetupModal()" role="button" tabindex="0" onkeydown="if(event.key === 'Enter' || event.key === ' ') openSetupModal()" aria-label="Open setup details">
+        <div class="setup-card-title">Setup</div>
+        <div class="stat-lbl">Specs + Gear</div>
       </div>
-    </div>
-    <div class="about-actions">
-      <button class="setup-btn" type="button" onclick="openSetupModal()">Setup</button>
     </div>
   </div>
 </section>
@@ -1516,38 +1509,18 @@
     <h2>Projects</h2>
     <div class="proj-grid">
       <div class="proj-card">
-        <div class="proj-badge">Windows App</div>
         <div class="proj-title">OLED Shield</div>
-        <div class="proj-desc">auto-hides your cursor, taskbar, and desktop icons when you go idle — protecting your OLED panel from burn-in. everything snaps back instantly on mouse move.</div>
-        <div class="proj-tags">
-          <span class="ptag">OLED</span>
-          <span class="ptag">Windows</span>
-          <span class="ptag">System Tray</span>
-        </div>
-        <div class="feat-grid">
-          <div class="feat">
-            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <span class="feat-txt">Idle timer + presets</span>
-          </div>
-          <div class="feat">
-            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5"/></svg>
-            <span class="feat-txt">Hides cursor + taskbar + Icons</span>
-          </div>
-          <div class="feat">
-            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3l14 9-14 9V3z"/></svg>
-            <span class="feat-txt">Instant restore</span>
-          </div>
-          <div class="feat">
-            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
-            <span class="feat-txt">Sleep / wake aware</span>
-          </div>
-        </div>
+        <div class="proj-subtitle">Windows utility for OLED users</div>
+        <div class="proj-desc">Auto-hides your cursor, taskbar, and desktop icons when idle — helping reduce static elements on OLED screens. Everything restores instantly on mouse move.</div>
+        <ul class="feature-list">
+          <li>Idle timer + presets</li>
+          <li>Hides cursor + taskbar + icons</li>
+          <li>Instant restore</li>
+          <li>Sleep / wake aware</li>
+        </ul>
         <div class="proj-actions">
           <a class="buy-btn" href="https://ko-fi.com/s/44920e5c3a" target="_blank" rel="noopener">Buy</a>
         </div>
-      </div>
-      <div class="proj-card empty">
-        <div class="empty-lbl">Coming soon</div>
       </div>
     </div>
   </div>
@@ -1577,16 +1550,8 @@
   <div class="footer-name">© 2026 Daniel <span class="footer-version">/ V1</span></div>
 </footer>
 
-
 <div class="modal-backdrop" id="contactModal" aria-hidden="true" onclick="closeContactModal(event)">
-  <div class="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
-    <div class="modal-top">
-      <div>
-        <div class="modal-title" id="contactModalTitle">Send me a message</div>
-      </div>
-      <button class="modal-close" type="button" onclick="closeContactModal()" aria-label="Close contact form">×</button>
-    </div>
-
+  <div class="contact-modal" role="dialog" aria-modal="true" aria-label="Contact form">
     <form class="contact-form" id="contactForm">
       <div class="field">
         <label for="contactName">Name</label>
@@ -1609,14 +1574,7 @@
 </div>
 
 <div class="modal-backdrop" id="setupModal" aria-hidden="true" onclick="closeSetupModal(event)">
-  <div class="contact-modal setup-modal" role="dialog" aria-modal="true" aria-labelledby="setupModalTitle">
-    <div class="modal-top">
-      <div>
-        <div class="modal-title" id="setupModalTitle">Setup</div>
-      </div>
-      <button class="modal-close" type="button" onclick="closeSetupModal()" aria-label="Close setup popup">×</button>
-    </div>
-
+  <div class="contact-modal setup-modal" role="dialog" aria-modal="true" aria-label="Setup details">
     <div class="setup-tabs" role="tablist" aria-label="Setup details">
       <button class="setup-tab active" type="button" role="tab" aria-selected="true" aria-controls="setupSpecifications" onclick="switchSetupTab('specifications')" data-setup-tab="specifications">Specifications</button>
       <button class="setup-tab" type="button" role="tab" aria-selected="false" aria-controls="setupPeripherals" onclick="switchSetupTab('peripherals')" data-setup-tab="peripherals">Peripherals</button>
@@ -1642,7 +1600,7 @@
         </div>
         <div class="spec-row">
           <div class="spec-label">Storage</div>
-          <div class="spec-value">Samsung 980 Pro 2TB / Samsung 970 Evo Plus 2TB</div>
+          <div class="spec-value">Samsung 980 Pro 2TB + Samsung 970 Evo Plus 2TB</div>
         </div>
         <div class="spec-row">
           <div class="spec-label">PSU</div>
@@ -1828,7 +1786,6 @@
     }
   });
 
-
   function goTo(id) {
     const target = document.getElementById(id);
     if (!target) return;
@@ -1854,7 +1811,6 @@
     const total = document.documentElement.scrollHeight - window.innerHeight;
     const progress = document.getElementById('progress');
     progress.style.width = (total > 0 ? (scrolled / total) * 100 : 0) + '%';
-
 
     const vh = window.innerHeight;
     let activeId = 'hero';
