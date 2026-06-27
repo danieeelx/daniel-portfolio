@@ -28,9 +28,23 @@
 
     body {
       font-family: 'Barlow', sans-serif;
-      background: var(--bg);
+      background:
+        radial-gradient(circle at 50% 0%, rgba(124,58,237,0.18), transparent 35%),
+        radial-gradient(circle at 90% 35%, rgba(125,211,252,0.08), transparent 28%),
+        var(--bg);
       color: var(--txt);
       min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(191,162,255,0.05), transparent 28%, rgba(125,211,252,0.04));
+      opacity: 0.65;
+      z-index: -1;
     }
 
     /* NAV */
@@ -40,7 +54,9 @@
       justify-content: space-between;
       padding: 18px 60px;
       border-bottom: 0.5px solid var(--bdr2);
-      background: var(--bg);
+      background: rgba(17,16,26,0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -71,7 +87,11 @@
       transition: color 0.2s;
     }
 
-    .nlinks li:hover { color: var(--txt); }
+    .nlinks li:hover,
+    .nlinks li.active {
+      color: var(--txt);
+      text-shadow: 0 0 18px rgba(125,211,252,0.45);
+    }
 
     /* PROGRESS */
     #progress {
@@ -79,7 +99,8 @@
       top: 0; left: 0;
       width: 0%;
       height: 1px;
-      background: var(--acc2);
+      background: linear-gradient(90deg, var(--acc), var(--acc2));
+      box-shadow: 0 0 18px rgba(125,211,252,0.7);
       z-index: 200;
       transition: width 0.06s;
     }
@@ -94,6 +115,24 @@
       padding: 100px 40px;
       position: relative;
       overflow: hidden;
+      isolation: isolate;
+    }
+
+    section::before {
+      content: "";
+      position: absolute;
+      inset: 10%;
+      background: radial-gradient(circle at center, rgba(125,211,252,0.045), transparent 62%);
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    section.inview::before {
+      opacity: 1;
+      transform: scale(1);
     }
 
     .sdiv {
@@ -105,22 +144,96 @@
     /* SCROLL ANIMATION */
     .si {
       opacity: 0;
-      transform: translateY(36px) scale(0.98);
-      transition: opacity 0.65s cubic-bezier(.2,0,.1,1), transform 0.65s cubic-bezier(.2,0,.1,1);
+      transform: translateY(58px) scale(0.965);
+      filter: blur(10px);
+      transition:
+        opacity 0.85s cubic-bezier(.2,0,.1,1),
+        transform 0.85s cubic-bezier(.2,0,.1,1),
+        filter 0.85s cubic-bezier(.2,0,.1,1);
       text-align: center;
       max-width: 820px;
       width: 100%;
+      will-change: transform, opacity, filter;
     }
 
     .si.vis {
       opacity: 1;
       transform: translateY(0) scale(1);
+      filter: blur(0);
     }
 
     .si.gone {
       opacity: 0;
-      transform: translateY(-22px) scale(1.01);
-      transition: opacity 0.3s ease, transform 0.3s ease;
+      transform: translateY(-38px) scale(1.015);
+      filter: blur(7px);
+      transition:
+        opacity 0.45s ease,
+        transform 0.45s ease,
+        filter 0.45s ease;
+    }
+
+    .si > * {
+      opacity: 0;
+      transform: translateY(18px);
+      transition:
+        opacity 0.65s ease,
+        transform 0.65s cubic-bezier(.2,0,.1,1);
+    }
+
+    .si.vis > * {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .si.vis > *:nth-child(1) { transition-delay: 0.04s; }
+    .si.vis > *:nth-child(2) { transition-delay: 0.10s; }
+    .si.vis > *:nth-child(3) { transition-delay: 0.16s; }
+    .si.vis > *:nth-child(4) { transition-delay: 0.22s; }
+    .si.vis > *:nth-child(5) { transition-delay: 0.28s; }
+    .si.vis > *:nth-child(6) { transition-delay: 0.34s; }
+
+    .proj-card,
+    .stat-card,
+    .cbtn {
+      opacity: 0;
+      transform: translateY(26px);
+      transition:
+        opacity 0.65s ease,
+        transform 0.65s cubic-bezier(.2,0,.1,1),
+        border-color 0.2s,
+        box-shadow 0.2s;
+    }
+
+    .si.vis .proj-card,
+    .si.vis .stat-card,
+    .si.vis .cbtn {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .si.vis .proj-card:nth-child(1),
+    .si.vis .stat-card:nth-child(1),
+    .si.vis .cbtn:nth-child(1) { transition-delay: 0.22s; }
+
+    .si.vis .proj-card:nth-child(2),
+    .si.vis .stat-card:nth-child(2),
+    .si.vis .cbtn:nth-child(2) { transition-delay: 0.32s; }
+
+    .si.vis .cbtn:nth-child(3) { transition-delay: 0.42s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .si, .si > *, .proj-card, .stat-card, .cbtn {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+      }
     }
 
     /* ORBS */
@@ -128,23 +241,26 @@
       position: absolute;
       border-radius: 50%;
       pointer-events: none;
+      will-change: transform;
+      transition: transform 0.12s linear;
     }
 
     .orb1 {
       width: 600px;
       height: 600px;
-      background: radial-gradient(circle, rgba(124,92,228,0.15) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(124,58,237,0.22) 0%, transparent 70%);
       top: -150px;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translate3d(calc(-50% + var(--orb1-x, 0px)), var(--orb1-y, 0px), 0);
     }
 
     .orb2 {
       width: 300px;
       height: 300px;
-      background: radial-gradient(circle, rgba(155,133,240,0.08) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(125,211,252,0.12) 0%, transparent 70%);
       bottom: -60px;
       right: 5%;
+      transform: translate3d(var(--orb2-x, 0px), var(--orb2-y, 0px), 0);
     }
 
     /* TYPOGRAPHY */
@@ -223,7 +339,11 @@
       transition: background 0.2s, transform 0.15s;
     }
 
-    .bp:hover { background: var(--acc2); transform: translateY(-2px); }
+    .bp:hover {
+      background: var(--acc2);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(125,211,252,0.22);
+    }
 
     .bg2 {
       font-family: 'Barlow Condensed', sans-serif;
@@ -239,7 +359,11 @@
       transition: all 0.2s;
     }
 
-    .bg2:hover { border-color: var(--acc2); color: var(--txt); }
+    .bg2:hover {
+      border-color: var(--acc2);
+      color: var(--txt);
+      box-shadow: 0 0 24px rgba(125,211,252,0.12);
+    }
 
     /* ABOUT */
     .about-block {
@@ -334,7 +458,11 @@
       flex-direction: column;
     }
 
-    .proj-card:hover { border-color: var(--acc2); transform: translateY(-2px); }
+    .proj-card:hover {
+      border-color: var(--acc2);
+      transform: translateY(-4px);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.22), 0 0 0 1px rgba(125,211,252,0.08);
+    }
 
     .proj-card.empty {
       border-style: dashed;
@@ -461,7 +589,11 @@
       text-decoration: none;
     }
 
-    .cbtn:hover { border-color: var(--acc2); color: var(--txt); }
+    .cbtn:hover {
+      border-color: var(--acc2);
+      color: var(--txt);
+      box-shadow: 0 0 24px rgba(125,211,252,0.12);
+    }
     .cbtn svg { flex-shrink: 0; color: var(--icon); }
 
     /* FOOTER */
@@ -521,9 +653,9 @@
 <nav>
   <div class="nlogo">Daniel</div>
   <ul class="nlinks">
-    <li onclick="goTo('about')">About</li>
-    <li onclick="goTo('projects')">Projects</li>
-    <li onclick="goTo('contact')">Contact</li>
+    <li data-target="about" onclick="goTo('about')">About</li>
+    <li data-target="projects" onclick="goTo('projects')">Projects</li>
+    <li data-target="contact" onclick="goTo('contact')">Contact</li>
   </ul>
 </nav>
 
@@ -657,37 +789,70 @@
 
 <script>
   const secs = ['hero','about','projects','contact'];
+  const navItems = [...document.querySelectorAll('.nlinks li')];
+  let ticking = false;
 
   function goTo(id) {
-    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function setActiveNav(activeId) {
+    navItems.forEach(item => {
+      item.classList.toggle('active', item.dataset.target === activeId);
+    });
   }
 
   function tick() {
-    const scrolled = window.scrollY;
+    const scrolled = window.scrollY || document.documentElement.scrollTop;
     const total = document.documentElement.scrollHeight - window.innerHeight;
-    document.getElementById('progress').style.width = (total > 0 ? (scrolled / total) * 100 : 0) + '%';
+    const progress = document.getElementById('progress');
+    progress.style.width = (total > 0 ? (scrolled / total) * 100 : 0) + '%';
+
+    document.documentElement.style.setProperty('--orb1-y', (scrolled * 0.08) + 'px');
+    document.documentElement.style.setProperty('--orb2-y', (scrolled * -0.06) + 'px');
 
     const vh = window.innerHeight;
+    let activeId = 'hero';
+
     secs.forEach(id => {
       const sec = document.getElementById(id);
       const si = document.getElementById('si-' + id);
       if (!sec || !si) return;
+
       const r = sec.getBoundingClientRect();
-      if (r.top < vh * 0.8 && r.bottom > vh * 0.1) {
+      const midpoint = r.top + r.height / 2;
+
+      if (r.top < vh * 0.78 && r.bottom > vh * 0.16) {
+        sec.classList.add('inview');
         si.classList.remove('gone');
         si.classList.add('vis');
-      } else if (r.bottom < vh * 0.1) {
+      } else if (r.bottom < vh * 0.16) {
+        sec.classList.remove('inview');
         si.classList.remove('vis');
         si.classList.add('gone');
       } else {
+        sec.classList.remove('inview');
         si.classList.remove('vis', 'gone');
       }
+
+      if (midpoint < vh * 0.65) activeId = id;
     });
+
+    setActiveNav(activeId);
+    ticking = false;
   }
 
-  window.addEventListener('scroll', tick);
-  window.addEventListener('resize', tick);
-  setTimeout(tick, 100);
+  function requestTick() {
+    if (!ticking) {
+      window.requestAnimationFrame(tick);
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', requestTick, { passive: true });
+  window.addEventListener('resize', requestTick);
+  window.addEventListener('load', tick);
+  setTimeout(tick, 80);
 </script>
 
 </body>
