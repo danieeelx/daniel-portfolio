@@ -58,6 +58,12 @@
       --toggle-icon: #A78BFA;
       --toggle-icon-soft: rgba(167,139,250,0.18);
       --focus-ring: rgba(125,211,252,0.22);
+
+      --modal-panel-bg: linear-gradient(180deg, #241E38 0%, #1D182E 100%);
+      --modal-panel-border: rgba(191,162,255,0.16);
+      --modal-panel-shadow: 0 18px 42px rgba(0,0,0,0.28);
+      --modal-panel-highlight: rgba(255,255,255,0.04);
+      --modal-tab-rail: rgba(255,255,255,0.03);
     }
 
     html[data-theme="light"] {
@@ -96,6 +102,12 @@
       --toggle-icon: #6D28D9;
       --toggle-icon-soft: rgba(109,40,217,0.14);
       --focus-ring: rgba(91,33,182,0.20);
+
+      --modal-panel-bg: linear-gradient(180deg, #F5F0FB 0%, #EEE7F8 100%);
+      --modal-panel-border: rgba(91,33,182,0.12);
+      --modal-panel-shadow: 0 16px 34px rgba(46,33,85,0.10);
+      --modal-panel-highlight: rgba(255,255,255,0.72);
+      --modal-tab-rail: rgba(255,255,255,0.34);
     }
 
     html[data-theme="light"] .field input,
@@ -249,109 +261,6 @@
       display: flex;
       align-items: center;
       gap: 22px;
-    }
-
-    .theme-toggle {
-      --toggle-shift: 31px;
-      width: 68px;
-      height: 34px;
-      border: 0.5px solid var(--bdr);
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--card), var(--card2));
-      color: var(--toggle-icon);
-      display: inline-flex;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 3px;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      user-select: none;
-      -webkit-user-select: none;
-      touch-action: manipulation;
-      transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease, background 0.48s ease, color 0.48s ease;
-    }
-
-    .theme-toggle::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, rgba(191,162,255,0.10), rgba(125,211,252,0.08));
-      opacity: 0.7;
-      pointer-events: none;
-    }
-
-    .theme-toggle:hover {
-      border-color: var(--acc2);
-      transform: translateY(-1px);
-      box-shadow: 0 0 22px rgba(125,211,252,0.14);
-    }
-
-    .theme-toggle:focus-visible {
-      outline: none;
-      border-color: var(--acc2);
-      box-shadow: 0 0 0 3px rgba(125,211,252,0.14), 0 0 22px rgba(125,211,252,0.14);
-    }
-
-    .theme-icon {
-      width: 27px;
-      height: 27px;
-      border-radius: 999px;
-      background: var(--bg2);
-      border: 0.5px solid var(--bdr);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 1;
-      position: relative;
-      z-index: 1;
-      box-shadow: 0 6px 18px var(--shadow-soft), inset 0 0 18px var(--toggle-icon-soft);
-      transform: translateX(0);
-      transition:
-        transform 0.42s cubic-bezier(.22, .8, .25, 1),
-        background 0.42s cubic-bezier(.22, .8, .25, 1),
-        border-color 0.42s cubic-bezier(.22, .8, .25, 1),
-        box-shadow 0.42s cubic-bezier(.22, .8, .25, 1),
-        color 0.42s cubic-bezier(.22, .8, .25, 1);
-    }
-
-    .theme-icon,
-    .theme-icon svg {
-      user-select: none;
-      -webkit-user-select: none;
-      -webkit-user-drag: none;
-      pointer-events: none;
-    }
-
-    .theme-icon svg {
-      width: 15px;
-      height: 15px;
-      position: absolute;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.9;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      transition: opacity 0.28s ease, transform 0.42s cubic-bezier(.22, .8, .25, 1);
-    }
-
-    .moon-icon {
-      opacity: 1;
-      transform: rotate(0deg) scale(1);
-    }
-
-    .sun-icon {
-      opacity: 0;
-      transform: rotate(-90deg) scale(0.55);
-    }
-html[data-theme="light"] .moon-icon {
-      opacity: 0;
-      transform: rotate(90deg) scale(0.55);
-    }
-
-    html[data-theme="light"] .sun-icon {
-      opacity: 1;
-      transform: rotate(0deg) scale(1);
     }
 
     .nlinks {
@@ -1245,8 +1154,7 @@ nav {
         font-size: 13px;
         letter-spacing: 0.16em;
       }
-      .theme-toggle { width: 58px; height: 32px; --toggle-shift: 25px; }
-      .theme-icon { width: 25px; height: 25px; font-size: 13px; }
+
       section { padding: 80px 24px; }
       h1 { font-size: 78px; }
       .subrole { letter-spacing: 0.15em; }
@@ -1286,28 +1194,10 @@ nav {
         font-size: 13px;
         letter-spacing: 0.14em;
       }
-      .theme-toggle {
-        position: absolute;
-        right: 0;
-        top: 50%;
-        width: 46px;
-        height: 26px;
-        padding: 3px;
-        --toggle-shift: 20px;
-        transform: translateY(-50%);
-      }
       .theme-toggle:hover {
         transform: translateY(-50%);
       }
-      .theme-icon {
-        width: 19px;
-        height: 19px;
-      }
-      .theme-icon svg {
-        width: 12px;
-        height: 12px;
-        stroke-width: 2;
-      }
+
       .subrole { font-size: 15px; letter-spacing: 0.12em; margin-bottom: 24px; }
       .modal-backdrop {
         align-items: flex-start;
@@ -1353,10 +1243,8 @@ nav {
       .nav-right { min-height: 30px; }
       .nlinks { gap: 14px; }
       .nlinks li { font-size: 12px; letter-spacing: 0.10em; }
-      .theme-toggle { right: 0; width: 42px; height: 24px; padding: 3px; --toggle-shift: 18px; }
       .theme-toggle:hover { transform: translateY(-50%); }
-      .theme-icon { width: 17px; height: 17px; }
-      .theme-icon svg { width: 10.5px; height: 10.5px; stroke-width: 2; }
+
       .contact-modal { padding: 22px 16px; }
       .setup-tabs {
         margin: 22px 32px 14px 0;
@@ -1372,8 +1260,6 @@ nav {
       }
     }
 
-  
-    /* Navbar icon theme button */
     nav {
       justify-content: center;
     }
@@ -1388,84 +1274,6 @@ nav {
 
     .nlinks {
       justify-content: center;
-    }
-
-    .theme-toggle {
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 36px;
-      height: 36px;
-      border-radius: 7px;
-      border: 0.5px solid var(--bdr);
-      background: var(--card);
-      color: var(--toggle-icon);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: none;
-      transition: color 0.22s ease, border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease, transform 0.18s ease;
-    }
-
-    .theme-toggle:hover,
-    .theme-toggle:focus-visible {
-      color: var(--acc2);
-      border-color: var(--acc2);
-      background: var(--card2);
-      transform: translateY(-50%) translateY(-1px);
-      box-shadow: 0 0 18px rgba(125,211,252,0.10);
-    }
-
-    .theme-icon {
-      position: relative;
-      width: 17px;
-      height: 17px;
-      display: block;
-      pointer-events: none;
-      transform: none !important;
-      background: transparent;
-      border: none;
-      box-shadow: none;
-      color: currentColor;
-    }
-
-    .theme-icon svg {
-      position: absolute;
-      inset: 0;
-      width: 17px;
-      height: 17px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      transition: opacity 0.24s ease, transform 0.24s ease;
-    }
-
-    .moon-icon {
-      opacity: 1;
-      transform: scale(1) rotate(0deg);
-    }
-
-    .sun-icon {
-      opacity: 0;
-      transform: scale(0.75) rotate(-30deg);
-    }
-
-    html[data-theme="light"] .moon-icon {
-      opacity: 0;
-      transform: scale(0.75) rotate(30deg);
-    }
-
-    html[data-theme="light"] .sun-icon {
-      opacity: 1;
-      transform: scale(1) rotate(0deg);
-    }
-
-    html[data-theme="light"] .theme-icon {
-      transform: none !important;
     }
 
     @media (max-width: 768px) {
@@ -1483,16 +1291,8 @@ nav {
         padding-right: 48px;
       }
 
-      .theme-toggle {
-        width: 34px;
-        height: 34px;
-      }
-
       .theme-icon,
-      .theme-icon svg {
-        width: 16px;
-        height: 16px;
-      }
+
     }
 
     @media (max-width: 430px) {
@@ -1510,16 +1310,8 @@ nav {
         letter-spacing: 0.13em;
       }
 
-      .theme-toggle {
-        width: 32px;
-        height: 32px;
-      }
-
       .theme-icon,
-      .theme-icon svg {
-        width: 15px;
-        height: 15px;
-      }
+
     }
 
     @media (max-width: 360px) {
@@ -1534,8 +1326,6 @@ nav {
       }
     }
 
-  
-    /* Final nav alignment: centered links + theme button pinned right */
     nav {
       display: flex;
       justify-content: center;
@@ -1557,33 +1347,315 @@ nav {
       padding: 0;
     }
 
-    .theme-toggle {
-      position: absolute;
-      top: 50%;
-      right: 18px;
-      transform: translateY(-50%);
-      margin: 0;
-    }
-
-    .theme-toggle:hover,
-    .theme-toggle:focus-visible {
-      transform: translateY(-50%) translateY(-1px);
-    }
-
     @media (max-width: 768px) {
       .nlinks {
         padding: 0;
         margin: 0 auto;
       }
+    }
 
-      .theme-toggle {
+    @media (max-width: 430px) {
+    }
+
+    @media (max-width: 768px) {
+    }
+
+    @media (max-width: 430px) {
+    }
+
+  
+    /* Theme icon button — transparent, no box */
+    #themeToggle {
+      position: absolute;
+      top: 50%;
+      right: 18px;
+      transform: translateY(-50%);
+      width: 22px;
+      height: 22px;
+      min-width: 0;
+      min-height: 0;
+      padding: 0;
+      margin: 0;
+      display: block;
+      background: none;
+      background-color: transparent;
+      border: 0;
+      outline: 0;
+      box-shadow: none;
+      appearance: none;
+      -webkit-appearance: none;
+      color: var(--toggle-icon);
+      cursor: pointer;
+      line-height: 0;
+      overflow: visible;
+    }
+
+    #themeToggle:hover,
+    #themeToggle:focus-visible {
+      background: none;
+      background-color: transparent;
+      border: 0;
+      box-shadow: none;
+      color: var(--acc2);
+    }
+
+    #themeToggle:focus-visible {
+      outline: 1px solid var(--acc2);
+      outline-offset: 8px;
+    }
+
+    #themeToggle .theme-svg {
+      position: absolute;
+      inset: 0;
+      width: 22px;
+      height: 22px;
+      display: block;
+      background: none;
+      background-color: transparent;
+      border: 0;
+      box-shadow: none;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      pointer-events: none;
+      transition: opacity 0.22s ease, transform 0.22s ease, color 0.22s ease;
+    }
+
+    #themeToggle .moon-icon {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    #themeToggle .moon-icon path {
+      fill: currentColor;
+      stroke: none;
+    }
+
+    
+    #themeToggle .sun-icon {
+      opacity: 0;
+      transform: scale(0.72) rotate(-25deg);
+    }
+
+    html[data-theme="light"] #themeToggle .moon-icon {
+      opacity: 0;
+      transform: scale(0.72) rotate(25deg);
+    }
+
+    html[data-theme="light"] #themeToggle .sun-icon {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+
+    @media (max-width: 768px) {
+      #themeToggle {
         right: 14px;
+        width: 20px;
+        height: 20px;
+      }
+
+      #themeToggle .theme-svg {
+        width: 20px;
+        height: 20px;
       }
     }
 
     @media (max-width: 430px) {
-      .theme-toggle {
+      #themeToggle {
         right: 10px;
+        width: 19px;
+        height: 19px;
+      }
+
+      #themeToggle .theme-svg {
+        width: 19px;
+        height: 19px;
+      }
+    }
+
+
+
+  
+    /* Ultra-minimal modal skin */
+    .contact-modal {
+      background: var(--modal-panel-bg);
+      border: 1px solid var(--modal-panel-border);
+      border-radius: 16px;
+      box-shadow:
+        inset 0 1px 0 var(--modal-panel-highlight),
+        var(--modal-panel-shadow);
+      padding: 28px;
+      overflow: hidden auto;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+
+    .contact-modal::before {
+      display: none;
+    }
+
+    .setup-modal {
+      width: min(100%, 560px);
+      padding-top: 24px;
+    }
+
+    .setup-tabs {
+      margin: 0 0 18px 0;
+      padding: 4px;
+      background: transparent;
+      border: 1px solid var(--modal-panel-border);
+      border-radius: 10px;
+      gap: 4px;
+      box-shadow: none;
+    }
+
+    .setup-tab {
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+
+    .setup-tab:hover {
+      background: rgba(255,255,255,0.03);
+      border-color: transparent;
+    }
+
+    .setup-tab.active {
+      background: rgba(124,58,237,0.10);
+      border-color: rgba(125,211,252,0.10);
+      box-shadow: none;
+    }
+
+    html[data-theme="light"] .setup-tab:hover {
+      background: rgba(91,33,182,0.04);
+    }
+
+    html[data-theme="light"] .setup-tab.active {
+      background: rgba(109,40,217,0.08);
+      border-color: rgba(91,33,182,0.10);
+      box-shadow: none;
+    }
+
+    .field input,
+    .field textarea {
+      background: var(--input-bg);
+      border-color: rgba(191,162,255,0.16);
+      box-shadow: none;
+    }
+
+    html[data-theme="light"] .field input,
+    html[data-theme="light"] .field textarea {
+      box-shadow: none;
+    }
+
+    @media (max-width: 768px) {
+      .contact-modal {
+        border-radius: 14px;
+        padding: 22px;
+      }
+
+      .setup-modal {
+        width: min(100%, 100%);
+        padding-top: 20px;
+      }
+
+      .setup-tabs {
+        margin-bottom: 16px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .contact-modal {
+        border-radius: 12px;
+        padding: 18px 16px;
+      }
+
+      .setup-tabs {
+        padding: 3px;
+        border-radius: 9px;
+      }
+
+      .setup-tab {
+        padding: 9px 10px;
+        font-size: 11px;
+      }
+    }
+
+
+  
+    /* Ultra-minimal setup text tabs */
+    .setup-tabs {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 54px;
+      margin: 0 0 22px 0;
+      padding: 0 0 13px 0;
+      background: transparent !important;
+      border: none !important;
+      border-bottom: 0.5px solid var(--bdr2) !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+
+    .setup-tab {
+      position: relative;
+      padding: 0 0 8px 0 !important;
+      background: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      color: var(--txt3);
+    }
+
+    .setup-tab:hover {
+      color: var(--txt2);
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    .setup-tab.active {
+      color: var(--txt);
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    .setup-tab.active::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 42px;
+      height: 1px;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, transparent, var(--acc2), var(--acc), transparent);
+      opacity: 0.9;
+    }
+
+    html[data-theme="light"] .setup-tab:hover,
+    html[data-theme="light"] .setup-tab.active {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    @media (max-width: 560px) {
+      .setup-tabs {
+        gap: 30px;
+        margin-bottom: 18px;
+        padding-bottom: 12px;
+      }
+
+      .setup-tab {
+        font-size: 11px;
+        letter-spacing: 0.14em;
+      }
+
+      .setup-tab.active::after {
+        width: 34px;
       }
     }
 
@@ -1602,16 +1674,14 @@ nav {
       <li data-target="projects" onclick="goTo('projects')">Projects</li>
       <li data-target="contact" onclick="goTo('contact')">Contact</li>
     </ul>
-    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch theme" title="Switch theme" draggable="false">
-      <span class="theme-icon" aria-hidden="true">
-        <svg class="moon-icon" viewBox="0 0 24 24" focusable="false" draggable="false">
-          <path d="M21 14.6A8.5 8.5 0 0 1 9.4 3a7 7 0 1 0 11.6 11.6z"></path>
-        </svg>
-        <svg class="sun-icon" viewBox="0 0 24 24" focusable="false" draggable="false">
-          <circle cx="12" cy="12" r="4"></circle>
-          <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"></path>
-        </svg>
-      </span>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch theme" title="Switch theme">
+      <svg class="moon-icon theme-svg" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+        <path d="M15.8 3.6A8.8 8.8 0 1 0 20.4 18a7.2 7.2 0 1 1-4.6-14.4z"></path>
+      </svg>
+      <svg class="sun-icon theme-svg" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"></path>
+      </svg>
     </button>
   </div>
 </nav>
