@@ -9,31 +9,19 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #000000;
-      --card: #0f0f0f;
-      --card2: #111111;
+      --bg: #1a1625;
+      --bg2: #1e1a2e;
+      --card: #221d33;
+      --card2: #271f38;
       --txt: #f0ebff;
-      --txt2: #8a7aaa;
-      --txt3: #3a2f5a;
-      --acc: #9b85f0;
-      --acc2: #7c5ce4;
-      --bdr: rgba(155,133,240,0.13);
-      --bdr2: rgba(155,133,240,0.06);
-      --icon: #9b85f0;
-    }
-
-    .lm {
-      --bg: #fafafa;
-      --card: #ffffff;
-      --card2: #f5f2ff;
-      --txt: #0d0a1a;
-      --txt2: #4a3880;
-      --txt3: #9980cc;
-      --acc: #5f3dc7;
-      --acc2: #7c5ce4;
-      --bdr: rgba(95,61,199,0.15);
-      --bdr2: rgba(95,61,199,0.07);
-      --icon: #5f3dc7;
+      --txt2: #9880c0;
+      --txt3: #4a3f6a;
+      --acc: #c4b5fd;
+      --acc2: #9b85f0;
+      --acc3: #7c5ce4;
+      --bdr: rgba(196,181,253,0.1);
+      --bdr2: rgba(196,181,253,0.05);
+      --icon: #c4b5fd;
     }
 
     html { scroll-behavior: smooth; }
@@ -42,7 +30,6 @@
       font-family: 'Barlow', sans-serif;
       background: var(--bg);
       color: var(--txt);
-      transition: background 0.35s, color 0.35s;
       min-height: 100vh;
     }
 
@@ -51,19 +38,18 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 40px;
+      padding: 18px 60px;
       border-bottom: 0.5px solid var(--bdr2);
       background: var(--bg);
       position: sticky;
       top: 0;
       z-index: 100;
-      transition: background 0.35s;
     }
 
     .nlogo {
       font-family: 'Barlow Condensed', sans-serif;
       font-weight: 700;
-      font-size: 20px;
+      font-size: 22px;
       letter-spacing: 0.18em;
       color: var(--acc);
       text-transform: uppercase;
@@ -71,13 +57,13 @@
 
     .nlinks {
       display: flex;
-      gap: 24px;
+      gap: 32px;
       list-style: none;
     }
 
     .nlinks li {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 11px;
+      font-size: 12px;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--txt2);
@@ -87,27 +73,13 @@
 
     .nlinks li:hover { color: var(--txt); }
 
-    .mtoggle {
-      background: var(--card);
-      border: 0.5px solid var(--bdr);
-      border-radius: 4px;
-      padding: 5px 11px;
-      font-size: 16px;
-      cursor: pointer;
-      line-height: 1;
-      transition: all 0.2s;
-    }
-
-    .mtoggle:hover { border-color: var(--acc); }
-
-    /* PROGRESS BAR */
+    /* PROGRESS */
     #progress {
       position: fixed;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       width: 0%;
       height: 1px;
-      background: var(--acc);
+      background: var(--acc2);
       z-index: 200;
       transition: width 0.06s;
     }
@@ -119,7 +91,9 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 80px 24px;
+      padding: 100px 40px;
+      position: relative;
+      overflow: hidden;
     }
 
     .sdiv {
@@ -131,10 +105,10 @@
     /* SCROLL ANIMATION */
     .si {
       opacity: 0;
-      transform: translateY(32px) scale(0.98);
-      transition: opacity 0.6s cubic-bezier(.2,0,.1,1), transform 0.6s cubic-bezier(.2,0,.1,1);
+      transform: translateY(36px) scale(0.98);
+      transition: opacity 0.65s cubic-bezier(.2,0,.1,1), transform 0.65s cubic-bezier(.2,0,.1,1);
       text-align: center;
-      max-width: 560px;
+      max-width: 700px;
       width: 100%;
     }
 
@@ -145,173 +119,196 @@
 
     .si.gone {
       opacity: 0;
-      transform: translateY(-20px) scale(1.01);
+      transform: translateY(-22px) scale(1.01);
       transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    /* ORBS */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .orb1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(124,92,228,0.15) 0%, transparent 70%);
+      top: -150px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .orb2 {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(155,133,240,0.08) 0%, transparent 70%);
+      bottom: -60px;
+      right: 5%;
     }
 
     /* TYPOGRAPHY */
     .tag {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 10px;
-      letter-spacing: 0.26em;
+      font-size: 11px;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: var(--acc);
-      margin-bottom: 10px;
+      color: var(--acc2);
+      margin-bottom: 12px;
+      opacity: 0.8;
     }
 
     .rule {
-      width: 30px;
+      width: 32px;
       height: 1px;
-      background: var(--acc);
-      margin: 0 auto 22px;
-      opacity: 0.4;
+      background: var(--acc2);
+      margin: 0 auto 24px;
+      opacity: 0.35;
     }
 
     h1 {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 72px;
+      font-size: 110px;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      line-height: 1.0;
+      line-height: 0.95;
       color: var(--txt);
-      margin-bottom: 8px;
+      margin-bottom: 16px;
     }
 
     h1 span { color: var(--acc); }
 
     h2 {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 30px;
+      font-size: 38px;
       font-weight: 600;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--txt);
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
 
     .subrole {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 13px;
-      letter-spacing: 0.24em;
+      font-size: 14px;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: var(--acc);
-      margin-bottom: 12px;
-      opacity: 0.75;
+      color: var(--acc2);
+      margin-bottom: 14px;
     }
 
     .sub {
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 300;
-      letter-spacing: 0.03em;
-      line-height: 1.8;
+      line-height: 1.9;
       color: var(--txt2);
-      margin-bottom: 24px;
+      margin-bottom: 28px;
     }
 
     /* BUTTONS */
-    .btns { display: flex; gap: 10px; justify-content: center; }
+    .btns { display: flex; gap: 12px; justify-content: center; }
 
     .bp {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.18em;
+      font-size: 12px;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      background: var(--acc2);
+      background: var(--acc3);
       color: #fff;
       border: none;
       border-radius: 3px;
-      padding: 10px 22px;
+      padding: 12px 28px;
       cursor: pointer;
       transition: background 0.2s, transform 0.15s;
     }
 
-    .bp:hover { background: var(--acc); transform: translateY(-2px); }
+    .bp:hover { background: var(--acc2); transform: translateY(-2px); }
 
     .bg2 {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.18em;
+      font-size: 12px;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       background: transparent;
       color: var(--txt2);
       border: 0.5px solid var(--bdr);
       border-radius: 3px;
-      padding: 10px 22px;
+      padding: 12px 28px;
       cursor: pointer;
       transition: all 0.2s;
     }
 
-    .bg2:hover { border-color: var(--acc); color: var(--txt); }
+    .bg2:hover { border-color: var(--acc2); color: var(--txt); }
 
     /* ABOUT */
     .about-block {
       background: var(--card);
       border: 0.5px solid var(--bdr);
-      border-radius: 6px;
-      padding: 18px 22px;
-      max-width: 420px;
-      margin: 0 auto 14px;
+      border-radius: 8px;
+      padding: 24px 28px;
+      max-width: 520px;
+      margin: 0 auto 16px;
       text-align: left;
     }
 
     .ab-name {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 22px;
+      font-size: 26px;
       font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--txt);
-      margin-bottom: 2px;
+      margin-bottom: 3px;
     }
 
     .ab-role {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 10px;
+      font-size: 11px;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--acc);
-      margin-bottom: 10px;
+      color: var(--acc2);
+      margin-bottom: 12px;
       opacity: 0.8;
     }
 
     .ab-body {
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 300;
-      line-height: 1.8;
+      line-height: 1.85;
       color: var(--txt2);
     }
 
     .stat-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      max-width: 420px;
+      gap: 10px;
+      max-width: 520px;
       margin: 0 auto;
     }
 
     .stat-card {
       background: var(--card);
       border: 0.5px solid var(--bdr2);
-      border-radius: 4px;
-      padding: 14px 10px;
+      border-radius: 6px;
+      padding: 20px 10px;
       text-align: center;
     }
 
     .stat-num {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 28px;
+      font-size: 38px;
       font-weight: 700;
       letter-spacing: 0.06em;
       color: var(--acc);
       line-height: 1;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .stat-lbl {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 9px;
-      letter-spacing: 0.22em;
+      font-size: 10px;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
       color: var(--txt3);
     }
@@ -320,8 +317,8 @@
     .proj-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      max-width: 560px;
+      gap: 14px;
+      max-width: 680px;
       margin: 0 auto;
       width: 100%;
     }
@@ -329,87 +326,90 @@
     .proj-card {
       background: var(--card);
       border: 0.5px solid var(--bdr);
-      border-radius: 6px;
-      padding: 14px 16px;
+      border-radius: 8px;
+      padding: 20px 22px;
       text-align: left;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, transform 0.2s;
       display: flex;
       flex-direction: column;
     }
 
-    .proj-card:hover { border-color: var(--acc); }
+    .proj-card:hover { border-color: var(--acc2); transform: translateY(-2px); }
 
     .proj-card.empty {
       border-style: dashed;
-      opacity: 0.35;
+      opacity: 0.3;
       align-items: center;
       justify-content: center;
-      min-height: 160px;
+      min-height: 200px;
+      cursor: default;
     }
+
+    .proj-card.empty:hover { transform: none; border-color: var(--bdr); }
 
     .proj-badge {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 8px;
+      font-size: 9px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--acc);
-      background: rgba(155,133,240,0.1);
-      border: 0.5px solid rgba(155,133,240,0.2);
+      background: rgba(196,181,253,0.08);
+      border: 0.5px solid rgba(196,181,253,0.15);
       border-radius: 2px;
-      padding: 2px 8px;
+      padding: 3px 9px;
       display: inline-block;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
     }
 
     .proj-title {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 18px;
+      font-size: 24px;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--txt);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .proj-desc {
-      font-size: 10px;
+      font-size: 12px;
       font-weight: 300;
-      line-height: 1.7;
+      line-height: 1.78;
       color: var(--txt2);
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       flex: 1;
     }
 
     .proj-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 4px;
-      margin-bottom: 10px;
+      gap: 5px;
+      margin-bottom: 12px;
     }
 
     .ptag {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 8px;
-      letter-spacing: 0.12em;
+      font-size: 9px;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       background: var(--card2);
       border: 0.5px solid var(--bdr);
       border-radius: 2px;
-      padding: 2px 7px;
+      padding: 3px 8px;
       color: var(--txt2);
     }
 
     .feat-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 4px;
+      gap: 5px;
     }
 
     .feat {
       display: flex;
       align-items: flex-start;
-      gap: 6px;
-      padding: 5px 8px;
+      gap: 8px;
+      padding: 7px 10px;
       background: var(--card2);
       border-radius: 3px;
       border: 0.5px solid var(--bdr2);
@@ -419,17 +419,17 @@
 
     .feat-txt {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 9px;
-      letter-spacing: 0.07em;
+      font-size: 10px;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--txt2);
-      line-height: 1.35;
+      line-height: 1.4;
     }
 
     .empty-lbl {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 10px;
-      letter-spacing: 0.2em;
+      font-size: 11px;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--txt3);
     }
@@ -437,37 +437,80 @@
     /* CONTACT */
     .contact-grid {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       justify-content: center;
-      margin-top: 16px;
+      margin-top: 20px;
       flex-wrap: wrap;
     }
 
     .cbtn {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 10px;
-      letter-spacing: 0.16em;
+      font-size: 11px;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       background: var(--card);
       border: 0.5px solid var(--bdr);
       border-radius: 3px;
-      padding: 8px 16px;
+      padding: 11px 20px;
       color: var(--txt2);
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
       transition: all 0.2s;
+      text-decoration: none;
     }
 
-    .cbtn:hover { border-color: var(--acc); color: var(--txt); }
+    .cbtn:hover { border-color: var(--acc2); color: var(--txt); }
     .cbtn svg { flex-shrink: 0; color: var(--icon); }
 
-    @media (max-width: 600px) {
-      nav { padding: 12px 20px; }
-      h1 { font-size: 48px; }
+    /* FOOTER */
+    footer {
+      border-top: 0.5px solid var(--bdr2);
+      padding: 24px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg);
+    }
+
+    .footer-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--txt3);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+    }
+
+    .footer-links a {
+      display: flex;
+      align-items: center;
+      color: var(--txt3);
+      transition: color 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover { color: var(--acc2); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 14px 24px; }
+      section { padding: 80px 24px; }
+      h1 { font-size: 72px; }
       .proj-grid { grid-template-columns: 1fr; }
       .stat-row { max-width: 100%; }
+      footer { padding: 20px 24px; }
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 52px; }
+      .nlinks { gap: 16px; }
     }
   </style>
 </head>
@@ -482,11 +525,12 @@
     <li onclick="goTo('projects')">Projects</li>
     <li onclick="goTo('contact')">Contact</li>
   </ul>
-  <button class="mtoggle" onclick="toggleMode()" id="mtoggle">🌙</button>
 </nav>
 
 <!-- HERO -->
 <section id="hero">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
   <div class="si" id="si-hero">
     <div class="tag">personal site / v1.0</div>
     <h1>HEY I'M<br><span>DANIEL</span></h1>
@@ -544,20 +588,20 @@
         </div>
         <div class="feat-grid">
           <div class="feat">
-            <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             <span class="feat-txt">Idle timer + presets</span>
           </div>
           <div class="feat">
-            <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5"/></svg>
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5"/></svg>
             <span class="feat-txt">Hides cursor + taskbar</span>
           </div>
           <div class="feat">
-            <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3l14 9-14 9V3z"/></svg>
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3l14 9-14 9V3z"/></svg>
             <span class="feat-txt">Instant restore</span>
           </div>
           <div class="feat">
-            <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
-            <span class="feat-txt">Sleep/wake aware</span>
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+            <span class="feat-txt">Sleep / wake aware</span>
           </div>
         </div>
       </div>
@@ -577,34 +621,45 @@
     <div class="rule"></div>
     <h2>Say hi</h2>
     <div class="contact-grid">
-      <button class="cbtn">
-        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+      <a class="cbtn" href="mailto:your@email.com">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
         Email
-      </button>
-      <button class="cbtn">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="color:var(--icon)"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.262 5.634 5.902-5.634zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+      <a class="cbtn" href="https://x.com/yourhandle" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.262 5.634 5.902-5.634zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
         X / Twitter
-      </button>
-      <button class="cbtn">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="color:var(--icon)"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.012.043.03.056a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+      </a>
+      <a class="cbtn" href="https://discord.com/users/yourid" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.012.043.03.056a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
         Discord
-      </button>
+      </a>
     </div>
   </div>
 </section>
 
+<div class="sdiv"></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">© 2026 Daniel</div>
+  <div class="footer-links">
+    <a href="mailto:your@email.com" title="Email">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+    </a>
+    <a href="https://x.com/yourhandle" target="_blank" rel="noopener" title="X / Twitter">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.262 5.634 5.902-5.634zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    </a>
+    <a href="https://discord.com/users/yourid" target="_blank" rel="noopener" title="Discord">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.012.043.03.056a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+    </a>
+  </div>
+</footer>
+
 <script>
   const secs = ['hero','about','projects','contact'];
-  let isLight = false;
 
   function goTo(id) {
     document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-  }
-
-  function toggleMode() {
-    isLight = !isLight;
-    document.body.classList.toggle('lm', isLight);
-    document.getElementById('mtoggle').textContent = isLight ? '☀️' : '🌙';
   }
 
   function tick() {
@@ -618,7 +673,7 @@
       const si = document.getElementById('si-' + id);
       if (!sec || !si) return;
       const r = sec.getBoundingClientRect();
-      if (r.top < vh * 0.78 && r.bottom > vh * 0.1) {
+      if (r.top < vh * 0.8 && r.bottom > vh * 0.1) {
         si.classList.remove('gone');
         si.classList.add('vis');
       } else if (r.bottom < vh * 0.1) {
