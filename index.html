@@ -162,7 +162,6 @@
     html.theme-changing .field input,
     html.theme-changing .field textarea,
     html.theme-changing .bp,
-    html.theme-changing .bg2,
     html.theme-changing .send-btn,
     html.theme-changing .theme-toggle {
       transition:
@@ -582,14 +581,6 @@
       margin-bottom: 28px;
     }
 
-    .sub {
-      font-size: 17px;
-      font-weight: 300;
-      line-height: 1.9;
-      color: var(--txt2);
-      margin-bottom: 28px;
-    }
-
     /* BUTTONS */
     .btns { display: flex; gap: 12px; justify-content: center; }
     .hero-btns-single .bp { min-width: 170px; }
@@ -612,26 +603,6 @@
       background: var(--acc2);
       transform: translateY(-3px);
       box-shadow: 0 12px 32px rgba(125,211,252,0.22);
-    }
-
-    .bg2 {
-      font-family: var(--font-head);
-      font-size: 14px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      background: transparent;
-      color: var(--txt2);
-      border: 0.5px solid var(--bdr);
-      border-radius: 3px;
-      padding: 13px 30px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .bg2:hover {
-      border-color: var(--acc2);
-      color: var(--txt);
-      box-shadow: 0 0 24px rgba(125,211,252,0.12);
     }
 
     /* ABOUT */
@@ -748,40 +719,6 @@
       line-height: 1;
     }
 
-    .setup-btn {
-      font-family: var(--font-head);
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      background: transparent;
-      color: var(--txt2);
-      border: 0.5px solid var(--bdr);
-      border-radius: 7px;
-      padding: 11px 26px;
-      min-width: 126px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      cursor: pointer;
-      transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-    }
-
-    .setup-btn:hover,
-    .setup-btn:focus-visible {
-      color: var(--txt);
-      background: rgba(125,211,252,0.04);
-      border-color: var(--acc2);
-      transform: translateY(-2px);
-      box-shadow: 0 0 22px rgba(125,211,252,0.12);
-    }
-
-    .setup-btn:focus-visible {
-      outline: 1px solid var(--acc2);
-      outline-offset: 4px;
-    }
-
     /* PROJECTS */
     .proj-grid {
       display: flex;
@@ -847,7 +784,7 @@
       outline-offset: 4px;
     }
 
-    .proj-card:not(.empty):hover {
+    .proj-card:hover {
       border-color: rgba(125,211,252,0.45);
       transform: translateY(-4px);
       box-shadow:
@@ -918,6 +855,75 @@
       background: var(--icon);
       opacity: 0.8;
       flex: 0 0 auto;
+    }
+
+
+    .project-contact-cta {
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    .project-contact-link {
+      font-family: var(--font-head);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--txt2);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      line-height: 1;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .project-contact-link::after {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: rotate(45deg);
+      opacity: 0.72;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      animation: chevronFloat 1.8s ease-in-out infinite;
+    }
+
+
+    .project-contact-link:hover,
+    .project-contact-link:focus-visible {
+      color: var(--acc2);
+      transform: translateY(-1px);
+      box-shadow: none;
+    }
+
+
+    .project-contact-link:hover::after,
+    .project-contact-link:focus-visible::after {
+      transform: translateY(2px) rotate(45deg);
+      opacity: 1;
+    }
+
+
+    @keyframes chevronFloat {
+      0%, 100% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 0.55;
+      }
+      50% {
+        transform: translateY(3px) rotate(45deg);
+        opacity: 1;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .project-contact-link::after {
+        animation: none;
+      }
     }
 
     /* CONTACT */
@@ -1038,60 +1044,6 @@
       transform: translateY(0) scale(1);
     }
 
-    .modal-top {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 18px;
-      margin-bottom: 18px;
-      padding: 4px 42px 0;
-      text-align: center;
-    }
-
-    .modal-title {
-      font-family: var(--font-head);
-      font-size: 28px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--txt);
-      line-height: 1.05;
-      text-shadow: none;
-      margin-bottom: 0;
-    }
-
-    .modal-sub {
-      font-size: 14px;
-      font-weight: 300;
-      line-height: 1.6;
-      color: var(--txt2);
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      z-index: 4;
-      width: 32px;
-      height: 32px;
-      display: grid;
-      place-items: center;
-      border: 0.5px solid var(--bdr);
-      border-radius: 8px;
-      background: var(--input-bg);
-      color: var(--txt2);
-      cursor: pointer;
-      font-size: 18px;
-      line-height: 1;
-      transition: all 0.2s ease;
-    }
-
-    .modal-close:hover {
-      color: var(--txt);
-      border-color: var(--acc2);
-      box-shadow: 0 0 18px rgba(125,211,252,0.14);
-    }
-
     .contact-form {
       display: grid;
       gap: 12px;
@@ -1164,21 +1116,6 @@
       padding-top: 24px;
     }
 
-    .setup-modal .modal-top {
-      min-height: 0;
-      height: 0;
-      margin: 0;
-      padding: 0;
-    }
-
-    .setup-modal .modal-top > div {
-      width: 100%;
-    }
-
-    .setup-modal-top-minimal {
-      display: block;
-    }
-
     .setup-tabs {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1233,19 +1170,8 @@
 
     .spec-grid {
       display: grid;
-      gap: 10px;
-      margin-top: 6px;
-    }
-
-    .spec-section-title {
-      font-family: var(--font-head);
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--txt3);
-      text-align: center;
-      margin: 0 2px 12px;
+      gap: 0;
+      margin-top: 4px;
     }
 
     .spec-row {
@@ -1253,10 +1179,16 @@
       align-items: center;
       justify-content: space-between;
       gap: 18px;
-      padding: 11px 13px;
-      border: 0.5px solid var(--bdr2);
-      border-radius: 8px;
-      background: var(--input-bg);
+      padding: 13px 0;
+      background: transparent;
+      border: none;
+      border-bottom: 0.5px solid var(--bdr2);
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .spec-row:first-child {
+      border-top: 0.5px solid var(--bdr2);
     }
 
     .spec-label {
@@ -1280,6 +1212,26 @@
     }
 
     /* RESPONSIVE */
+
+    /* Final setup row cleanup: divider rows only, no long boxes */
+    .setup-modal .spec-grid {
+      gap: 0 !important;
+    }
+
+    .setup-modal .spec-row {
+      background: transparent !important;
+      border: none !important;
+      border-bottom: 0.5px solid var(--bdr2) !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+
+    .setup-modal .spec-row:first-child {
+      border-top: 0.5px solid var(--bdr2) !important;
+    }
+
     @media (max-width: 768px) {
       nav {
         padding: 14px 24px;
@@ -1376,13 +1328,6 @@
         max-height: calc(100vh - 36px);
         max-height: calc(100dvh - 36px);
       }
-      .modal-close {
-        top: 12px;
-        right: 12px;
-        width: 30px;
-        height: 30px;
-        font-size: 17px;
-      }
       .setup-modal {
         width: min(100%, 520px);
         padding-top: 18px;
@@ -1398,7 +1343,7 @@
       }
       .spec-row {
         gap: 10px;
-        padding: 10px 12px;
+        padding: 12px 2px;
       }
       .spec-label {
         font-size: 11px;
@@ -1469,7 +1414,7 @@
     <h1>HEY I'M<br><span>DANIEL</span></h1>
     <div class="subrole">Gamer · Tech</div>
     <div class="btns hero-btns-single">
-      <button class="bp" onclick="goTo('projects')">My projects</button>
+      <button class="bp" onclick="goTo('about')">Explore</button>
     </div>
   </div>
 </section>
@@ -1522,6 +1467,9 @@
           <a class="buy-btn" href="https://ko-fi.com/s/44920e5c3a" target="_blank" rel="noopener">Buy</a>
         </div>
       </div>
+    </div>
+    <div class="project-contact-cta">
+      <button class="project-contact-link" type="button" onclick="goTo('contact')">Get in touch</button>
     </div>
   </div>
 </section>
