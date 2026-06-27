@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Daniel</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2311101A'/%3E%3Cpath d='M21 14h13.5c9.5 0 16.5 6.7 16.5 18s-7 18-16.5 18H21V14Zm10 9v18h3.4c4 0 6.8-3.2 6.8-9s-2.8-9-6.8-9H31Z' fill='%23BFA2FF'/%3E%3Cpath d='M31 23v18h3.4c4 0 6.8-3.2 6.8-9s-2.8-9-6.8-9H31Z' fill='%237DD3FC' fill-opacity='.28'/%3E%3C/svg%3E" />
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script>
     (function () {
@@ -56,6 +57,7 @@
       --accent-blue-solid: #2563EB;
       --toggle-icon: #A78BFA;
       --toggle-icon-soft: rgba(167,139,250,0.18);
+      --focus-ring: rgba(125,211,252,0.22);
     }
 
     html[data-theme="light"] {
@@ -93,6 +95,7 @@
       --accent-blue-solid: #1D4ED8;
       --toggle-icon: #6D28D9;
       --toggle-icon-soft: rgba(109,40,217,0.14);
+      --focus-ring: rgba(91,33,182,0.20);
     }
 
     html[data-theme="light"] .proj-badge {
@@ -119,6 +122,25 @@
     }
 
     html { scroll-behavior: smooth; }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    [tabindex]:focus-visible {
+      outline: 1px solid var(--acc2);
+      outline-offset: 4px;
+      box-shadow: 0 0 0 4px var(--focus-ring);
+    }
+
+    button,
+    a,
+    svg {
+      -webkit-user-drag: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
 
     ::view-transition-old(root),
     ::view-transition-new(root) {
@@ -697,6 +719,55 @@
       color: var(--txt3);
     }
 
+    .stat-card.clickable {
+      cursor: pointer;
+    }
+
+    .stat-card.clickable:focus-visible {
+      outline: 1px solid var(--acc2);
+      outline-offset: 4px;
+    }
+
+    .about-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 16px;
+    }
+
+    .setup-btn {
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: transparent;
+      color: var(--txt2);
+      border: 0.5px solid var(--bdr);
+      border-radius: 7px;
+      padding: 11px 26px;
+      min-width: 126px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      cursor: pointer;
+      transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .setup-btn:hover,
+    .setup-btn:focus-visible {
+      color: var(--txt);
+      background: rgba(125,211,252,0.04);
+      border-color: var(--acc2);
+      transform: translateY(-2px);
+      box-shadow: 0 0 22px rgba(125,211,252,0.12);
+    }
+
+    .setup-btn:focus-visible {
+      outline: 1px solid var(--acc2);
+      outline-offset: 4px;
+    }
+
     /* PROJECTS */
     .proj-grid {
       display: grid;
@@ -723,27 +794,30 @@
     }
 
     .proj-actions {
-      margin-top: 16px;
+      margin-top: auto;
+      padding-top: 26px;
       display: flex;
       justify-content: center;
+      align-items: center;
       width: 100%;
     }
 
     .buy-btn {
       font-family: var(--font-head);
-      font-size: 13px;
-      font-weight: 600;
+      font-size: 15px;
+      font-weight: 700;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      min-width: 148px;
       color: var(--btn-text);
       background: linear-gradient(135deg, var(--acc3), var(--accent-blue-solid));
       border: 0.5px solid rgba(255,255,255,0.16);
-      border-radius: 999px;
-      padding: 9px 16px;
+      border-radius: 7px;
+      padding: 13px 34px;
       cursor: pointer;
       transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
     }
@@ -922,6 +996,14 @@
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--txt3);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-version {
+      color: var(--acc2);
+      opacity: 0.8;
     }
 
 
@@ -1081,6 +1163,128 @@
       box-shadow: 0 16px 34px rgba(124,58,237,0.22), 0 0 24px rgba(125,211,252,0.12);
     }
 
+    .setup-modal {
+      width: min(100%, 540px);
+    }
+
+    .setup-modal .modal-top {
+      position: relative;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .setup-modal .modal-top > div {
+      width: 100%;
+    }
+
+    .setup-modal .modal-close {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    .setup-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 2px 0 16px;
+      padding: 4px;
+      border: 0.5px solid var(--bdr2);
+      border-radius: 10px;
+      background: var(--input-bg);
+    }
+
+    .setup-tab {
+      font-family: var(--font-head);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--txt2);
+      background: transparent;
+      border: 0.5px solid transparent;
+      border-radius: 7px;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .setup-tab:hover {
+      color: var(--txt);
+      border-color: var(--bdr);
+    }
+
+    .setup-tab.active {
+      color: var(--txt);
+      background: linear-gradient(135deg, rgba(124,58,237,0.18), rgba(37,99,235,0.12));
+      border-color: var(--bdr);
+      box-shadow: 0 0 20px rgba(125,211,252,0.08);
+    }
+
+    .setup-panel {
+      display: none;
+    }
+
+    .setup-panel.active {
+      display: block;
+      animation: setupPanelIn 0.22s ease both;
+    }
+
+    @keyframes setupPanelIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .spec-grid {
+      display: grid;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .spec-section-title {
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--txt3);
+      text-align: center;
+      margin: 0 2px 12px;
+    }
+
+    .spec-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 11px 13px;
+      border: 0.5px solid var(--bdr2);
+      border-radius: 8px;
+      background: var(--input-bg);
+    }
+
+    .spec-label {
+      font-family: var(--font-head);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--acc2);
+      white-space: nowrap;
+    }
+
+    .spec-value {
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      line-height: 1.45;
+      color: var(--txt);
+      text-align: right;
+    }
+
 
     /* RESPONSIVE */
     @media (max-width: 768px) {
@@ -1130,7 +1334,7 @@
       .nav-right {
         width: 100%;
         min-height: 32px;
-        position: relative;
+        position: static;
         justify-content: center;
         gap: 0;
       }
@@ -1145,16 +1349,16 @@
       }
       .theme-toggle {
         position: absolute;
-        left: 0;
-        top: 50%;
+        right: 18px;
+        top: 16px;
         width: 46px;
         height: 26px;
         padding: 3px;
         --toggle-shift: 20px;
-        transform: translateY(-50%);
+        transform: none;
       }
       .theme-toggle:hover {
-        transform: translateY(-50%) translateY(-1px);
+        transform: translateY(-1px);
       }
       .theme-icon {
         width: 19px;
@@ -1173,7 +1377,7 @@
       .nav-right { min-height: 30px; }
       .nlinks { gap: 14px; }
       .nlinks li { font-size: 12px; letter-spacing: 0.10em; }
-      .theme-toggle { left: 0; width: 42px; height: 24px; padding: 3px; --toggle-shift: 18px; }
+      .theme-toggle { right: 0; width: 42px; height: 24px; padding: 3px; --toggle-shift: 18px; }
       .theme-icon { width: 17px; height: 17px; }
       .theme-icon svg { width: 10.5px; height: 10.5px; stroke-width: 2; }
     }
@@ -1232,14 +1436,17 @@
       <div class="ab-body">Currently working as a ServiceNow developer, creating things I think are cool and writing about whatever else is on my mind.</div>
     </div>
     <div class="stat-row">
-      <div class="stat-card">
-        <div class="stat-num">29</div>
-        <div class="stat-lbl">Games</div>
+      <div class="stat-card clickable" onclick="goTo('projects')" role="button" tabindex="0" onkeydown="if(event.key === 'Enter' || event.key === ' ') goTo('projects')" aria-label="Go to projects section">
+        <div class="stat-num">1</div>
+        <div class="stat-lbl">Projects</div>
       </div>
       <div class="stat-card">
         <div class="stat-num">∞</div>
-        <div class="stat-lbl">Hrs Played</div>
+        <div class="stat-lbl">Ideas</div>
       </div>
+    </div>
+    <div class="about-actions">
+      <button class="setup-btn" type="button" onclick="openSetupModal()">Setup</button>
     </div>
   </div>
 </section>
@@ -1312,7 +1519,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-name">© 2026 Daniel</div>
+  <div class="footer-name">© 2026 Daniel <span class="footer-version">/ V1</span></div>
 </footer>
 
 
@@ -1343,6 +1550,102 @@
 
       <button class="send-btn" type="submit">Send</button>
     </form>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="setupModal" aria-hidden="true" onclick="closeSetupModal(event)">
+  <div class="contact-modal setup-modal" role="dialog" aria-modal="true" aria-labelledby="setupModalTitle">
+    <div class="modal-top">
+      <div>
+        <div class="modal-title" id="setupModalTitle">Setup</div>
+      </div>
+      <button class="modal-close" type="button" onclick="closeSetupModal()" aria-label="Close setup popup">×</button>
+    </div>
+
+    <div class="setup-tabs" role="tablist" aria-label="Setup details">
+      <button class="setup-tab active" type="button" role="tab" aria-selected="true" aria-controls="setupSpecifications" onclick="switchSetupTab('specifications')" data-setup-tab="specifications">Specifications</button>
+      <button class="setup-tab" type="button" role="tab" aria-selected="false" aria-controls="setupPeripherals" onclick="switchSetupTab('peripherals')" data-setup-tab="peripherals">Peripherals</button>
+    </div>
+
+    <div class="setup-panel active" id="setupSpecifications" role="tabpanel" data-setup-panel="specifications">
+      <div class="spec-section-title">Specifications</div>
+      <div class="spec-grid">
+        <div class="spec-row">
+          <div class="spec-label">CPU</div>
+          <div class="spec-value">Intel Core i5-13600K 3.50 GHz</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-label">GPU</div>
+          <div class="spec-value">GIGABYTE NVIDIA GeForce RTX 4070</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-label">Memory</div>
+          <div class="spec-value">TEAMGROUP T-Force 32GB DDR5 6000 MHz</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-label">Motherboard</div>
+          <div class="spec-value">GIGABYTE Z790 GAMING X AX</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-label">Storage</div>
+          <div class="spec-value">Samsung 980 Pro 2TB / Samsung 970 Evo Plus 2TB</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-label">PSU</div>
+          <div class="spec-value">Corsair HX750 80+ Platinum</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-label">Cooling</div>
+          <div class="spec-value">Thermalright Burst Assassin 120 EVO Dark</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-label">Case</div>
+          <div class="spec-value">NZXT H7 Elite Black</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-label">OS</div>
+          <div class="spec-value">Windows 11 Pro 25H2</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="setup-panel" id="setupPeripherals" role="tabpanel" data-setup-panel="peripherals">
+      <div class="spec-section-title">Peripherals</div>
+      <div class="spec-grid">
+        <div class="spec-row">
+          <div class="spec-label">Monitor</div>
+          <div class="spec-value">GIGABYTE MO27Q2 OLED</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-label">Keyboard</div>
+          <div class="spec-value">PMO Wave 75 Silver / HMX Bamboo Switches</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-label">Mouse</div>
+          <div class="spec-value">WLMouse Beast X Max Silver (Omron Optical)</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-label">Mousepad</div>
+          <div class="spec-value">WallHack SP-004A Glass Pad (Black)</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-label">Controller</div>
+          <div class="spec-value">Flydigi Vader 4 Pro</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-label">Webcam</div>
+          <div class="spec-value">OBSBOT Meet SE AI</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-label">Microphone</div>
+          <div class="spec-value">FIFINE Amplitank K688</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-label">Speakers</div>
+          <div class="spec-value">Edifier MR4 (Black)</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1405,6 +1708,7 @@
 
   const contactModal = document.getElementById('contactModal');
   const contactForm = document.getElementById('contactForm');
+  const setupModal = document.getElementById('setupModal');
 
   function openContactModal() {
     contactModal.classList.add('show');
@@ -1417,6 +1721,35 @@
     if (event && event.target !== contactModal) return;
     contactModal.classList.remove('show');
     contactModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  function switchSetupTab(tabName) {
+    const tabs = document.querySelectorAll('[data-setup-tab]');
+    const panels = document.querySelectorAll('[data-setup-panel]');
+
+    tabs.forEach(tab => {
+      const isActive = tab.dataset.setupTab === tabName;
+      tab.classList.toggle('active', isActive);
+      tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+
+    panels.forEach(panel => {
+      panel.classList.toggle('active', panel.dataset.setupPanel === tabName);
+    });
+  }
+
+  function openSetupModal() {
+    switchSetupTab('specifications');
+    setupModal.classList.add('show');
+    setupModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSetupModal(event) {
+    if (event && event.target !== setupModal) return;
+    setupModal.classList.remove('show');
+    setupModal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
   }
 
@@ -1437,11 +1770,24 @@
     if (event.key === 'Escape' && contactModal.classList.contains('show')) {
       closeContactModal();
     }
+    if (event.key === 'Escape' && setupModal.classList.contains('show')) {
+      closeSetupModal();
+    }
   });
 
 
   function goTo(id) {
-    document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const target = document.getElementById(id);
+    if (!target) return;
+
+    const nav = document.querySelector('nav');
+    const navOffset = nav ? nav.offsetHeight : 0;
+    const targetTop = target.getBoundingClientRect().top + window.scrollY - navOffset + 1;
+
+    window.scrollTo({
+      top: Math.max(0, targetTop),
+      behavior: 'smooth'
+    });
   }
 
   function setActiveNav(activeId) {
