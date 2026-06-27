@@ -859,7 +859,7 @@
 
 
     .project-contact-cta {
-      margin-top: 24px;
+      margin-top: 22px;
       text-align: center;
     }
 
@@ -867,63 +867,20 @@
       font-family: var(--font-head);
       font-size: 15px;
       font-weight: 600;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--txt2);
       background: transparent;
       border: none;
       cursor: pointer;
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 7px;
-      line-height: 1;
       transition: color 0.2s ease, transform 0.2s ease;
     }
-
-    .project-contact-link::after {
-      content: "";
-      width: 7px;
-      height: 7px;
-      border-right: 1.5px solid currentColor;
-      border-bottom: 1.5px solid currentColor;
-      transform: rotate(45deg);
-      opacity: 0.72;
-      transition: transform 0.2s ease, opacity 0.2s ease;
-      animation: chevronFloat 1.8s ease-in-out infinite;
-    }
-
 
     .project-contact-link:hover,
     .project-contact-link:focus-visible {
       color: var(--acc2);
       transform: translateY(-1px);
       box-shadow: none;
-    }
-
-
-    .project-contact-link:hover::after,
-    .project-contact-link:focus-visible::after {
-      transform: translateY(2px) rotate(45deg);
-      opacity: 1;
-    }
-
-
-    @keyframes chevronFloat {
-      0%, 100% {
-        transform: translateY(0) rotate(45deg);
-        opacity: 0.55;
-      }
-      50% {
-        transform: translateY(3px) rotate(45deg);
-        opacity: 1;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .project-contact-link::after {
-        animation: none;
-      }
     }
 
     /* CONTACT */
@@ -1380,6 +1337,60 @@
         text-align: left;
       }
     }
+  
+    /* Mobile navbar polish: keep Daniel visible while links stay centered */
+    @media (max-width: 768px) {
+      nav {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+          "logo toggle"
+          "links links";
+        row-gap: 16px;
+        align-items: center;
+      }
+
+      .nlogo {
+        grid-area: logo;
+        display: block;
+        justify-self: start;
+        font-size: 32px;
+        letter-spacing: 0.22em;
+      }
+
+      .nav-right {
+        display: contents;
+      }
+
+      .nlinks {
+        grid-area: links;
+        justify-content: center;
+        width: 100%;
+      }
+
+      .theme-toggle {
+        grid-area: toggle;
+        justify-self: end;
+      }
+    }
+
+    @media (max-width: 480px) {
+      nav {
+        padding: 18px 22px;
+        row-gap: 14px;
+      }
+
+      .nlogo {
+        font-size: 30px;
+        letter-spacing: 0.2em;
+      }
+
+      .nlinks {
+        gap: 28px;
+      }
+    }
+
+
   </style>
 </head>
 <body>
@@ -1414,7 +1425,7 @@
     <h1>HEY I'M<br><span>DANIEL</span></h1>
     <div class="subrole">Gamer · Tech</div>
     <div class="btns hero-btns-single">
-      <button class="bp" onclick="goTo('about')">Explore</button>
+      <button class="bp" onclick="goToCentered('about')">Explore</button>
     </div>
   </div>
 </section>
@@ -1741,6 +1752,28 @@
     const nav = document.querySelector('nav');
     const navOffset = nav ? nav.offsetHeight : 0;
     const targetTop = target.getBoundingClientRect().top + window.scrollY - navOffset + 1;
+
+    window.scrollTo({
+      top: Math.max(0, targetTop),
+      behavior: 'smooth'
+    });
+  }
+
+  function goToCentered(id) {
+    const section = document.getElementById(id);
+    if (!section) return;
+
+    const content = document.getElementById('si-' + id) || section;
+    const nav = document.querySelector('nav');
+    const navOffset = nav ? nav.offsetHeight : 0;
+    const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    const contentRect = content.getBoundingClientRect();
+
+    const targetTop =
+      contentRect.top +
+      window.scrollY -
+      ((viewportHeight - contentRect.height) / 2) -
+      (navOffset / 2);
 
     window.scrollTo({
       top: Math.max(0, targetTop),
