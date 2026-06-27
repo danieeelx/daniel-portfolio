@@ -53,6 +53,8 @@
       --placeholder: rgba(185,168,221,0.55);
       --btn-text: #FFFFFF;
       --accent-blue-solid: #2563EB;
+      --toggle-icon: #A78BFA;
+      --toggle-icon-soft: rgba(167,139,250,0.18);
     }
 
     html[data-theme="light"] {
@@ -87,6 +89,8 @@
       --placeholder: rgba(62,51,86,0.62);
       --btn-text: #FFFFFF;
       --accent-blue-solid: #1D4ED8;
+      --toggle-icon: #6D28D9;
+      --toggle-icon-soft: rgba(109,40,217,0.14);
     }
 
     html[data-theme="light"] .proj-badge {
@@ -231,7 +235,7 @@
       border: 0.5px solid var(--bdr);
       border-radius: 999px;
       background: linear-gradient(135deg, var(--card), var(--card2));
-      color: var(--txt);
+      color: var(--toggle-icon);
       display: inline-flex;
       align-items: center;
       justify-content: flex-start;
@@ -239,7 +243,10 @@
       cursor: pointer;
       position: relative;
       overflow: hidden;
-      transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease, background 0.48s ease;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease, background 0.48s ease, color 0.48s ease;
     }
 
     .theme-toggle::before {
@@ -257,6 +264,12 @@
       box-shadow: 0 0 22px rgba(125,211,252,0.14);
     }
 
+    .theme-toggle:focus-visible {
+      outline: none;
+      border-color: var(--acc2);
+      box-shadow: 0 0 0 3px rgba(125,211,252,0.14), 0 0 22px rgba(125,211,252,0.14);
+    }
+
     .theme-icon {
       width: 27px;
       height: 27px;
@@ -266,21 +279,61 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
       line-height: 1;
       position: relative;
       z-index: 1;
-      box-shadow: 0 6px 18px var(--shadow-soft);
+      box-shadow: 0 6px 18px var(--shadow-soft), inset 0 0 18px var(--toggle-icon-soft);
       transform: translateX(0);
       transition:
         transform 0.42s cubic-bezier(.22, .8, .25, 1),
         background 0.42s cubic-bezier(.22, .8, .25, 1),
         border-color 0.42s cubic-bezier(.22, .8, .25, 1),
-        box-shadow 0.42s cubic-bezier(.22, .8, .25, 1);
+        box-shadow 0.42s cubic-bezier(.22, .8, .25, 1),
+        color 0.42s cubic-bezier(.22, .8, .25, 1);
+    }
+
+    .theme-icon,
+    .theme-icon svg {
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+
+    .theme-icon svg {
+      width: 15px;
+      height: 15px;
+      position: absolute;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: opacity 0.28s ease, transform 0.42s cubic-bezier(.22, .8, .25, 1);
+    }
+
+    .moon-icon {
+      opacity: 1;
+      transform: rotate(0deg) scale(1);
+    }
+
+    .sun-icon {
+      opacity: 0;
+      transform: rotate(-90deg) scale(0.55);
     }
 
     html[data-theme="light"] .theme-icon {
       transform: translateX(var(--toggle-shift));
+    }
+
+    html[data-theme="light"] .moon-icon {
+      opacity: 0;
+      transform: rotate(90deg) scale(0.55);
+    }
+
+    html[data-theme="light"] .sun-icon {
+      opacity: 1;
+      transform: rotate(0deg) scale(1);
     }
 
     .nlinks {
@@ -1029,9 +1082,29 @@
 
     /* RESPONSIVE */
     @media (max-width: 768px) {
-      nav { padding: 14px 24px; }
-      .nav-right { gap: 14px; }
-      .theme-toggle { width: 64px; height: 34px; --toggle-shift: 29px; }
+      nav {
+        padding: 14px 24px;
+        gap: 14px;
+      }
+      .nlogo {
+        font-size: 24px;
+        letter-spacing: 0.14em;
+        flex-shrink: 0;
+      }
+      .nav-right {
+        gap: 14px;
+        flex-shrink: 1;
+        min-width: 0;
+      }
+      .nlinks {
+        gap: 18px;
+      }
+      .nlinks li {
+        font-size: 13px;
+        letter-spacing: 0.16em;
+      }
+      .theme-toggle { width: 58px; height: 32px; --toggle-shift: 25px; }
+      .theme-icon { width: 25px; height: 25px; font-size: 13px; }
       section { padding: 80px 24px; }
       h1 { font-size: 78px; }
       .proj-grid { grid-template-columns: 1fr; }
@@ -1039,12 +1112,52 @@
       footer { padding: 20px 24px; }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 560px) {
+      nav {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 16px 18px 14px;
+        gap: 12px;
+      }
+      .nlogo {
+        font-size: 28px;
+        letter-spacing: 0.18em;
+        line-height: 1;
+      }
+      .nav-right {
+        width: 100%;
+        justify-content: center;
+        gap: 14px;
+      }
+      .nlinks {
+        gap: 18px;
+        justify-content: center;
+      }
+      .nlinks li {
+        font-size: 13px;
+        letter-spacing: 0.14em;
+      }
+      .theme-toggle {
+        width: 52px;
+        height: 30px;
+        --toggle-shift: 22px;
+      }
+      .theme-icon {
+        width: 23px;
+        height: 23px;
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 390px) {
       h1 { font-size: 58px; }
-      .nlinks { gap: 14px; }
-      .nlinks li { font-size: 12px; letter-spacing: 0.16em; }
-      .theme-toggle { width: 60px; height: 32px; --toggle-shift: 27px; }
-      .theme-icon { width: 25px; height: 25px; font-size: 13px; }
+      nav { padding-left: 14px; padding-right: 14px; }
+      .nav-right { gap: 10px; }
+      .nlinks { gap: 12px; }
+      .nlinks li { font-size: 12px; letter-spacing: 0.10em; }
+      .theme-toggle { width: 48px; height: 28px; --toggle-shift: 20px; }
+      .theme-icon { width: 21px; height: 21px; font-size: 11px; }
     }
   </style>
 </head>
@@ -1061,8 +1174,16 @@
       <li data-target="projects" onclick="goTo('projects')">Projects</li>
       <li data-target="contact" onclick="goTo('contact')">Contact</li>
     </ul>
-    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch theme" title="Switch theme">
-      <span class="theme-icon" aria-hidden="true">🌙</span>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch theme" title="Switch theme" draggable="false">
+      <span class="theme-icon" aria-hidden="true">
+        <svg class="moon-icon" viewBox="0 0 24 24" focusable="false" draggable="false">
+          <path d="M21 14.6A8.5 8.5 0 0 1 9.4 3a7 7 0 1 0 11.6 11.6z"></path>
+        </svg>
+        <svg class="sun-icon" viewBox="0 0 24 24" focusable="false" draggable="false">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"></path>
+        </svg>
+      </span>
     </button>
   </div>
 </nav>
@@ -1070,9 +1191,8 @@
 <!-- HERO -->
 <section id="hero">
   <div class="si" id="si-hero">
-    <div class="tag">personal site / v1.0</div>
     <h1>HEY I'M<br><span>DANIEL</span></h1>
-    <div class="subrole">Gamer &nbsp;·&nbsp; Builder &nbsp;·&nbsp; Tech</div>
+    <div class="subrole">Gamer &nbsp;·&nbsp; Tech</div>
     <p class="sub">figuring it out one line at a time.</p>
     <div class="btns">
       <button class="bp" onclick="goTo('projects')">My projects</button>
@@ -1211,11 +1331,8 @@
 <script>
   const root = document.documentElement;
   const themeToggle = document.getElementById('themeToggle');
-  const themeIcon = themeToggle ? themeToggle.querySelector('.theme-icon') : null;
-
   function applyTheme(theme) {
     root.dataset.theme = theme;
-    if (themeIcon) themeIcon.textContent = theme === 'light' ? '☀️' : '🌙';
     if (themeToggle) {
       themeToggle.setAttribute('aria-label', theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
       themeToggle.setAttribute('title', theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
