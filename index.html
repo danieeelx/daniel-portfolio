@@ -344,12 +344,7 @@
       opacity: 0;
       transform: rotate(-90deg) scale(0.55);
     }
-
-    html[data-theme="light"] .theme-icon {
-      transform: translateX(var(--toggle-shift));
-    }
-
-    html[data-theme="light"] .moon-icon {
+html[data-theme="light"] .moon-icon {
       opacity: 0;
       transform: rotate(90deg) scale(0.55);
     }
@@ -892,7 +887,6 @@
       transition: transform 0.2s ease, opacity 0.2s ease;
     }
 
-
     .project-contact-link:hover,
     .project-contact-link:focus-visible {
       color: var(--acc2);
@@ -900,13 +894,11 @@
       box-shadow: none;
     }
 
-
     .project-contact-link:hover::after,
     .project-contact-link:focus-visible::after {
       transform: translateY(2px) rotate(45deg);
       opacity: 1;
     }
-
 
     @keyframes chevronFloat {
       0%, 100% {
@@ -1232,8 +1224,7 @@
     }
 
     @media (max-width: 768px) {
-      html[data-theme="light"] .theme-icon { transform: translateX(26px); }
-      nav {
+nav {
         padding: 14px 24px;
         gap: 14px;
       }
@@ -1382,7 +1373,7 @@
     }
 
   
-    /* Centered nav + small floating theme toggle */
+    /* Navbar icon theme button */
     nav {
       justify-content: center;
     }
@@ -1392,6 +1383,7 @@
       align-items: center;
       justify-content: center;
       width: 100%;
+      position: relative;
     }
 
     .nlinks {
@@ -1399,30 +1391,86 @@
     }
 
     .theme-toggle {
-      position: fixed;
-      right: 22px;
-      bottom: 22px;
-      z-index: 300;
-      width: 58px;
-      height: 30px;
-      flex: 0 0 auto;
-      transform: translateZ(0);
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      border-radius: 7px;
+      border: 0.5px solid var(--bdr);
+      background: var(--card);
+      color: var(--toggle-icon);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: none;
+      transition: color 0.22s ease, border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease, transform 0.18s ease;
+    }
+
+    .theme-toggle:hover,
+    .theme-toggle:focus-visible {
+      color: var(--acc2);
+      border-color: var(--acc2);
+      background: var(--card2);
+      transform: translateY(-50%) translateY(-1px);
+      box-shadow: 0 0 18px rgba(125,211,252,0.10);
     }
 
     .theme-icon {
-      width: 24px;
-      height: 24px;
+      position: relative;
+      width: 17px;
+      height: 17px;
+      display: block;
+      pointer-events: none;
+      transform: none !important;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      color: currentColor;
     }
 
     .theme-icon svg {
-      width: 14px;
-      height: 14px;
+      position: absolute;
+      inset: 0;
+      width: 17px;
+      height: 17px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: opacity 0.24s ease, transform 0.24s ease;
+    }
+
+    .moon-icon {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+
+    .sun-icon {
+      opacity: 0;
+      transform: scale(0.75) rotate(-30deg);
+    }
+
+    html[data-theme="light"] .moon-icon {
+      opacity: 0;
+      transform: scale(0.75) rotate(30deg);
+    }
+
+    html[data-theme="light"] .sun-icon {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+
+    html[data-theme="light"] .theme-icon {
+      transform: none !important;
     }
 
     @media (max-width: 768px) {
       nav {
         padding: 18px 20px;
-        min-height: auto;
       }
 
       .nav-right {
@@ -1432,35 +1480,29 @@
       .nlinks {
         width: 100%;
         gap: 28px;
-        padding: 0;
+        padding-right: 48px;
       }
 
       .theme-toggle {
-        right: 16px;
-        bottom: 16px;
-        width: 54px;
-        height: 28px;
+        width: 34px;
+        height: 34px;
       }
 
-      .theme-icon {
-        width: 22px;
-        height: 22px;
-      }
-
+      .theme-icon,
       .theme-icon svg {
-        width: 13px;
-        height: 13px;
+        width: 16px;
+        height: 16px;
       }
     }
 
     @media (max-width: 430px) {
-      html[data-theme="light"] .theme-icon { transform: translateX(23px); }
       nav {
         padding: 16px 14px;
       }
 
       .nlinks {
         gap: 20px;
+        padding-right: 42px;
       }
 
       .nlinks li {
@@ -1469,21 +1511,21 @@
       }
 
       .theme-toggle {
-        width: 50px;
-        height: 27px;
-        right: 14px;
-        bottom: 14px;
+        width: 32px;
+        height: 32px;
       }
 
-      .theme-icon {
-        width: 21px;
-        height: 21px;
+      .theme-icon,
+      .theme-icon svg {
+        width: 15px;
+        height: 15px;
       }
     }
 
     @media (max-width: 360px) {
       .nlinks {
         gap: 14px;
+        padding-right: 38px;
       }
 
       .nlinks li {
@@ -1498,7 +1540,15 @@
 
 <div id="progress"></div>
 
-<button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch theme" title="Switch theme" draggable="false">
+<nav>
+<div class="nav-right">
+    <ul class="nlinks">
+    <li data-target="hero" onclick="goTo('hero')">Home</li>
+    <li data-target="about" onclick="goTo('about')">About</li>
+      <li data-target="projects" onclick="goTo('projects')">Projects</li>
+      <li data-target="contact" onclick="goTo('contact')">Contact</li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch theme" title="Switch theme" draggable="false">
       <span class="theme-icon" aria-hidden="true">
         <svg class="moon-icon" viewBox="0 0 24 24" focusable="false" draggable="false">
           <path d="M21 14.6A8.5 8.5 0 0 1 9.4 3a7 7 0 1 0 11.6 11.6z"></path>
@@ -1509,15 +1559,6 @@
         </svg>
       </span>
     </button>
-
-<nav>
-<div class="nav-right">
-    <ul class="nlinks">
-    <li data-target="hero" onclick="goTo('hero')">Home</li>
-    <li data-target="about" onclick="goTo('about')">About</li>
-      <li data-target="projects" onclick="goTo('projects')">Projects</li>
-      <li data-target="contact" onclick="goTo('contact')">Contact</li>
-    </ul>
   </div>
 </nav>
 
