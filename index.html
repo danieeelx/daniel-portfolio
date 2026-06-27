@@ -24,6 +24,7 @@
       --font-body: 'Rajdhani', sans-serif;
       --font-head: 'Rajdhani', sans-serif;
       --bg: #11101A;
+      --body-gradient: var(--bg);
       --bg2: #17152A;
       --card: #1D1830;
       --card2: #251E3D;
@@ -59,8 +60,9 @@
 
     html[data-theme="light"] {
       color-scheme: light;
-      --bg: #EDE7F8;
-      --bg2: #E5DDF4;
+      --bg: #F3EFFF;
+      --body-gradient: linear-gradient(180deg, #F3EFFF 0%, #EEF4FF 45%, #F8F6FF 100%);
+      --bg2: #E9E2F5;
       --card: #F8F5FF;
       --card2: #EEE7FB;
       --txt: #171224;
@@ -72,11 +74,11 @@
       --bdr: rgba(91,33,182,0.22);
       --bdr2: rgba(29,78,216,0.16);
       --icon: #5B21B6;
-      --nav-bg: rgba(237,231,248,0.86);
-      --body-glow1: rgba(91,33,182,0.08);
-      --body-glow2: rgba(29,78,216,0.055);
-      --page-overlay-top: rgba(91,33,182,0.025);
-      --page-overlay-bottom: rgba(29,78,216,0.025);
+      --nav-bg: rgba(243,239,255,0.84);
+      --body-glow1: rgba(124,92,228,0.14);
+      --body-glow2: rgba(59,130,246,0.12);
+      --page-overlay-top: rgba(124,92,228,0.022);
+      --page-overlay-bottom: rgba(59,130,246,0.020);
       --section-glow: rgba(29,78,216,0.030);
       --shadow-soft: rgba(57,42,96,0.14);
       --shadow-strong: rgba(38,29,66,0.24);
@@ -159,9 +161,9 @@
     body {
       font-family: var(--font-body);
       background:
-        radial-gradient(circle at 50% 0%, var(--body-glow1), transparent 35%),
-        radial-gradient(circle at 90% 35%, var(--body-glow2), transparent 28%),
-        var(--bg);
+        radial-gradient(circle at top left, var(--body-glow1), transparent 34%),
+        radial-gradient(circle at top right, var(--body-glow2), transparent 32%),
+        var(--body-gradient);
       color: var(--txt);
       min-height: 100vh;
       overflow-x: hidden;
@@ -1139,14 +1141,19 @@
         letter-spacing: 0.14em;
       }
       .theme-toggle {
-        width: 52px;
-        height: 30px;
-        --toggle-shift: 22px;
+        width: 46px;
+        height: 26px;
+        padding: 3px;
+        --toggle-shift: 20px;
       }
       .theme-icon {
-        width: 23px;
-        height: 23px;
-        font-size: 12px;
+        width: 19px;
+        height: 19px;
+      }
+      .theme-icon svg {
+        width: 12px;
+        height: 12px;
+        stroke-width: 2;
       }
     }
 
@@ -1156,8 +1163,9 @@
       .nav-right { gap: 10px; }
       .nlinks { gap: 12px; }
       .nlinks li { font-size: 12px; letter-spacing: 0.10em; }
-      .theme-toggle { width: 48px; height: 28px; --toggle-shift: 20px; }
-      .theme-icon { width: 21px; height: 21px; font-size: 11px; }
+      .theme-toggle { width: 42px; height: 24px; padding: 3px; --toggle-shift: 18px; }
+      .theme-icon { width: 17px; height: 17px; }
+      .theme-icon svg { width: 10.5px; height: 10.5px; stroke-width: 2; }
     }
   </style>
 </head>
