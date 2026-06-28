@@ -1866,7 +1866,7 @@ nav {
     }
 
     @keyframes oledStatus {
-      0%, 36% { content: "IDLE WATCH"; }
+      0%, 36% { content: "IDLE"; }
       37%, 66% { content: "HIDDEN"; }
       67%, 100% { content: "RESTORED"; }
     }
@@ -1950,12 +1950,12 @@ nav {
     }
 
     .oled-status::after {
-      content: "Idle Watch";
+      content: "IDLE";
       animation: oledStatusText 4.8s steps(1, end) infinite;
     }
 
     @keyframes oledStatusText {
-      0%, 36% { content: "Idle Watch"; }
+      0%, 36% { content: "IDLE"; }
       37%, 66% { content: "Hidden"; }
       67%, 100% { content: "Restored"; }
     }
@@ -2478,6 +2478,83 @@ nav {
     html[data-theme="light"] .contact-modal .field-shell textarea::placeholder {
       color: var(--txt3) !important;
       opacity: 1;
+    }
+
+
+
+    /* Unify setup + email popup edge color/thinness */
+    .contact-modal,
+    .setup-modal,
+    .contact-modal:not(.setup-modal) {
+      border: 0.5px solid rgba(138, 120, 213, 0.34) !important;
+      border-radius: 14px;
+      box-shadow: none !important;
+      outline: none !important;
+      background-clip: padding-box;
+    }
+
+    @media (max-width: 560px) {
+      .contact-modal,
+      .setup-modal,
+      .contact-modal:not(.setup-modal) {
+        border-radius: 12px;
+      }
+    }
+
+    html[data-theme="light"] .contact-modal,
+    html[data-theme="light"] .setup-modal,
+    html[data-theme="light"] .contact-modal:not(.setup-modal) {
+      border: 0.5px solid rgba(107, 93, 136, 0.22) !important;
+      box-shadow: none !important;
+    }
+
+
+    /* Popup color polish: use website purple/lavender, not greenish cyan */
+    .setup-modal .spec-label,
+    .setup-modal .spec-icon,
+    .contact-modal .field label,
+    .contact-modal .field-label-icon {
+      color: var(--acc) !important;
+    }
+
+    .setup-modal .spec-value,
+    .contact-modal .field-shell input,
+    .contact-modal .field-shell textarea {
+      color: var(--txt) !important;
+    }
+
+    .setup-modal .setup-tab.active {
+      color: var(--txt) !important;
+    }
+
+    .setup-modal .setup-tab {
+      color: var(--txt3) !important;
+    }
+
+    .setup-modal .setup-tab.active::after,
+    .contact-kicker::after {
+      background: linear-gradient(90deg, transparent, var(--acc), var(--acc2), transparent) !important;
+    }
+
+    html[data-theme="light"] .setup-modal .spec-label,
+    html[data-theme="light"] .setup-modal .spec-icon,
+    html[data-theme="light"] .contact-modal .field label,
+    html[data-theme="light"] .contact-modal .field-label-icon {
+      color: var(--acc) !important;
+    }
+
+    html[data-theme="light"] .setup-modal .spec-value,
+    html[data-theme="light"] .contact-modal .field-shell input,
+    html[data-theme="light"] .contact-modal .field-shell textarea {
+      color: var(--txt) !important;
+    }
+
+    html[data-theme="light"] .setup-modal .setup-tab.active {
+      color: var(--txt) !important;
+    }
+
+    html[data-theme="light"] .setup-modal .setup-tab {
+      color: var(--txt3) !important;
     }
 
 </style>
