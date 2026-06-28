@@ -2214,6 +2214,38 @@ nav {
       overflow-y: hidden;
     }
 
+
+    /* Project card spacing polish */
+    .proj-desc {
+      margin-bottom: 10px;
+    }
+
+    .oled-demo {
+      margin-top: 0;
+    }
+
+    .feature-list {
+      margin-top: 12px;
+    }
+
+    .proj-actions {
+      padding-top: 22px;
+    }
+
+    @media (max-width: 560px) {
+      .proj-desc {
+        margin-bottom: 8px;
+      }
+
+      .feature-list {
+        margin-top: 10px;
+      }
+
+      .proj-actions {
+        padding-top: 20px;
+      }
+    }
+
 </style>
 </head>
 <body>
@@ -2264,7 +2296,7 @@ nav {
       <div class="ab-body">Currently working as a ServiceNow developer, creating things I think are cool and writing about whatever else is on my mind.</div>
     </div>
     <div class="stat-row">
-      <div class="stat-card clickable" onclick="goToSection('projects')" role="button" tabindex="0" onkeydown="if(event.key === 'Enter' || event.key === ' ') goToCentered('projects')" aria-label="Go to projects section">
+      <div class="stat-card clickable" onclick="goToSection('projects')" role="button" tabindex="0" onkeydown="if(event.key === 'Enter' || event.key === ' ') goToSection('projects')" aria-label="Go to projects section">
         <div class="stat-num">1</div>
         <div class="stat-lbl">Projects</div>
       </div>
@@ -2288,7 +2320,7 @@ nav {
       <div class="proj-card">
         <div class="proj-title">OLED Shield</div>
         <div class="proj-subtitle">Windows utility for OLED users</div>
-        <div class="proj-desc">Auto-hides your cursor, taskbar, and desktop icons when idle — helping reduce static elements on OLED screens. Everything restores instantly on mouse move.</div>
+        <div class="proj-desc">Auto-hides your cursor, taskbar, and desktop icons when idle, then restores everything instantly on mouse move.</div>
         <div class="oled-demo" aria-label="OLED Shield demo animation">
           <div class="oled-demo-top">
             <span>OLED Shield Live</span>
@@ -2312,7 +2344,7 @@ nav {
           <li>Sleep / wake aware</li>
         </ul>
         <div class="proj-actions">
-          <a class="buy-btn" href="https://ko-fi.com/s/44920e5c3a" target="_blank" rel="noopener">Buy</a>
+          <a class="buy-btn" href="https://ko-fi.com/s/44920e5c3a" target="_blank" rel="noopener">Purchase — $5.99</a>
         </div>
       </div>
     </div>
@@ -2669,26 +2701,24 @@ nav {
     if (!section) return 0;
     if (id === 'hero') return 0;
 
-    const content = document.getElementById('si-' + id) || section;
     const nav = document.querySelector('nav');
     const navOffset = nav ? nav.offsetHeight : 0;
 
     /*
-      Use layout positions instead of getBoundingClientRect().
-      getBoundingClientRect() includes the .si animation transform, so the
-      target changes after the section becomes visible. That is why tapping
-      About again could move the page slightly upward on mobile.
+      Stable mobile-friendly anchors:
+      - About stays slightly higher because it is the first content section.
+      - Projects/Contact land a little deeper so the previous section
+        will not stay active/glowing on Samsung/Chrome/iOS.
     */
-    const viewportHeight = lockedSectionVh || window.innerHeight || document.documentElement.clientHeight;
-    const availableHeight = viewportHeight - navOffset;
-    const contentTop = section.offsetTop + content.offsetTop;
-    const contentHeight = content.offsetHeight;
+    const sectionTop = section.offsetTop;
+    const offsets = {
+      about: 16,
+      projects: 74,
+      contact: 74
+    };
 
-    if (contentHeight < availableHeight * 0.98) {
-      return Math.max(0, Math.round(contentTop - ((availableHeight - contentHeight) / 2) - navOffset + 8));
-    }
-
-    return Math.max(0, Math.round(section.offsetTop - navOffset));
+    const extra = offsets[id] || 40;
+    return Math.max(0, sectionTop - navOffset + extra);
   }
 
   function goToSection(id) {
@@ -2735,6 +2765,9 @@ nav {
     }
 
     const vh = window.innerHeight;
+    const nav = document.querySelector('nav');
+    const navOffset = nav ? nav.offsetHeight : 0;
+    const activeProbe = scrolled + navOffset + (vh - navOffset) * 0.42;
     let activeId = 'hero';
 
     secs.forEach(function (id) {
@@ -2742,23 +2775,27 @@ nav {
       const si = document.getElementById('si-' + id);
       if (!sec || !si) return;
 
-      const r = sec.getBoundingClientRect();
-      const midpoint = r.top + r.height / 2;
+      const sectionTop = sec.offsetTop;
+      const sectionBottom = sectionTop + sec.offsetHeight;
 
-      if (r.top < vh * 0.78 && r.bottom > vh * 0.16) {
-        sec.classList.add('inview');
-        si.classList.remove('gone');
+      if (activeProbe >= sectionTop && activeProbe < sectionBottom) {
+        activeId = id;
+      }
+
+      const rect = sec.getBoundingClientRect();
+      const inView = rect.top < vh * 0.72 && rect.bottom > vh * 0.18;
+
+      sec.classList.toggle('inview', inView);
+
+      if (inView) {
         si.classList.add('vis');
-      } else if (r.bottom < vh * 0.16) {
-        sec.classList.remove('inview');
+        si.classList.remove('gone');
+      } else if (rect.top < -vh * 0.15) {
         si.classList.remove('vis');
         si.classList.add('gone');
       } else {
-        sec.classList.remove('inview');
         si.classList.remove('vis', 'gone');
       }
-
-      if (midpoint < vh * 0.65) activeId = id;
     });
 
     setActiveNav(activeId);
