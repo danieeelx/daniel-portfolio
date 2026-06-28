@@ -2041,6 +2041,20 @@ nav {
 
     if (id === 'hero') {
       targetTop = 0;
+    } else if (id === 'projects') {
+      // Projects should show the whole card area, including "what i built" and "Get in touch".
+      if (contentRect.height < availableHeight * 0.98) {
+        targetTop =
+          contentRect.top +
+          window.scrollY -
+          ((availableHeight - contentRect.height) / 2) -
+          navOffset +
+          8;
+      } else {
+        targetTop = contentRect.top + window.scrollY - navOffset - 18;
+      }
+    } else if (id === 'contact') {
+      targetTop = contentRect.top + window.scrollY - navOffset - 22;
     } else if (contentRect.height >= availableHeight * 0.92) {
       targetTop = contentRect.top + window.scrollY - navOffset - 18;
     } else {
