@@ -2605,6 +2605,26 @@ nav {
       }
     }
 
+
+    /* Performance fix: lighter modal animation, no blur */
+    .modal-backdrop .contact-modal {
+      filter: none !important;
+      transform: translateY(8px) scale(0.985);
+      transition:
+        opacity 0.18s ease,
+        transform 0.18s ease !important;
+      will-change: opacity, transform;
+    }
+
+    .modal-backdrop.show .contact-modal {
+      filter: none !important;
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-backdrop {
+      transition: opacity 0.18s ease, visibility 0.18s ease !important;
+    }
+
 </style>
 </head>
 <body>
