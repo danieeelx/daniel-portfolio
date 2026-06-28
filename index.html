@@ -1475,6 +1475,8 @@ nav {
       }
     }
 
+
+
   
     /* Ultra-minimal modal skin */
     .contact-modal {
@@ -1580,6 +1582,7 @@ nav {
       }
     }
 
+
   
     /* Ultra-minimal setup text tabs */
     .setup-tabs {
@@ -1656,22 +1659,6 @@ nav {
       }
     }
 
-  
-    /* Exact scroll anchors for matching nav/button pairs */
-    .scroll-anchor {
-      position: relative;
-      height: 0;
-      width: 100%;
-      pointer-events: none;
-      scroll-margin-top: calc(var(--nav-height, 72px) + 24px);
-    }
-
-    @media (max-width: 768px) {
-      .scroll-anchor {
-        scroll-margin-top: calc(var(--nav-height, 64px) + 20px);
-      }
-    }
-
 
   </style>
 </head>
@@ -1682,10 +1669,10 @@ nav {
 <nav>
 <div class="nav-right">
     <ul class="nlinks">
-    <li data-target="hero" onclick="goToAnchor('hero')">Home</li>
-    <li data-target="about" onclick="goToAnchor('about')">About</li>
-      <li data-target="projects" onclick="goToAnchor('projects')">Projects</li>
-      <li data-target="contact" onclick="goToAnchor('contact')">Contact</li>
+    <li data-target="hero" onclick="goToSection('hero')">Home</li>
+    <li data-target="about" onclick="goToSection('about')">About</li>
+      <li data-target="projects" onclick="goToSection('projects')">Projects</li>
+      <li data-target="contact" onclick="goToSection('contact')">Contact</li>
     </ul>
     <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch theme" title="Switch theme">
       <svg class="moon-icon theme-svg" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
@@ -1705,7 +1692,7 @@ nav {
     <h1>HEY I'M<br><span>DANIEL</span></h1>
     <div class="subrole">Gamer · Tech</div>
     <div class="btns hero-btns-single">
-      <button class="bp" onclick="goToAnchor('about')">Explore</button>
+      <button class="bp" onclick="goToSection('about')">Explore</button>
     </div>
   </div>
 </section>
@@ -1714,7 +1701,6 @@ nav {
 
 <!-- ABOUT -->
 <section id="about">
-  <div class="scroll-anchor" id="anchor-about"></div>
   <div class="si" id="si-about">
     <div class="tag">who i am</div>
     <div class="rule"></div>
@@ -1724,7 +1710,7 @@ nav {
       <div class="ab-body">Currently working as a ServiceNow developer, creating things I think are cool and writing about whatever else is on my mind.</div>
     </div>
     <div class="stat-row">
-      <div class="stat-card clickable" onclick="goToAnchor('projects')" role="button" tabindex="0" onkeydown="if(event.key === 'Enter' || event.key === ' ') goToAnchor('projects')" aria-label="Go to projects section">
+      <div class="stat-card clickable" onclick="goToSection('projects')" role="button" tabindex="0" onkeydown="if(event.key === 'Enter' || event.key === ' ') goToCentered('projects')" aria-label="Go to projects section">
         <div class="stat-num">1</div>
         <div class="stat-lbl">Projects</div>
       </div>
@@ -1740,7 +1726,6 @@ nav {
 
 <!-- PROJECTS -->
 <section id="projects">
-  <div class="scroll-anchor" id="anchor-projects"></div>
   <div class="si" id="si-projects">
     <div class="tag">what i built</div>
     <div class="rule"></div>
@@ -1762,7 +1747,7 @@ nav {
       </div>
     </div>
     <div class="project-contact-cta">
-      <button class="project-contact-link" type="button" onclick="goToAnchor('contact')">Get in touch</button>
+      <button class="project-contact-link" type="button" onclick="goToSection('contact')">Get in touch</button>
     </div>
   </div>
 </section>
@@ -1771,7 +1756,6 @@ nav {
 
 <!-- CONTACT -->
 <section id="contact">
-  <div class="scroll-anchor" id="anchor-contact"></div>
   <div class="si" id="si-contact">
     <div class="tag">let's connect</div>
     <div class="rule"></div>
@@ -1903,19 +1887,21 @@ nav {
 </div>
 
 <script>
-
-  // Start at Home when the page is refreshed/reloaded.
-  if (window.performance && performance.getEntriesByType) {
-    const navEntry = performance.getEntriesByType('navigation')[0];
-    if (navEntry && navEntry.type === 'reload') {
-      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-      window.scrollTo(0, 0);
-      requestAnimationFrame(() => window.scrollTo(0, 0));
-    }
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
   }
+
+  window.addEventListener('load', function () {
+    const navEntry = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+    if (navEntry && navEntry.type === 'reload') {
+      window.scrollTo(0, 0);
+      requestAnimationFrame(function () { window.scrollTo(0, 0); });
+    }
+  });
 
   const root = document.documentElement;
   const themeToggle = document.getElementById('themeToggle');
+
   function applyTheme(theme) {
     root.dataset.theme = theme;
     if (themeToggle) {
@@ -1966,8 +1952,8 @@ nav {
     });
   }
 
-  const secs = ['hero','about','projects','contact'];
-  const navItems = [...document.querySelectorAll('.nlinks li')];
+  const secs = ['hero', 'about', 'projects', 'contact'];
+  const navItems = Array.from(document.querySelectorAll('.nlinks li'));
   let ticking = false;
 
   const contactModal = document.getElementById('contactModal');
@@ -1975,13 +1961,19 @@ nav {
   const setupModal = document.getElementById('setupModal');
 
   function openContactModal() {
+    if (!contactModal) return;
     contactModal.classList.add('show');
     contactModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-    setTimeout(() => document.getElementById('contactName').focus(), 120);
+
+    setTimeout(function () {
+      const nameInput = document.getElementById('contactName');
+      if (nameInput) nameInput.focus();
+    }, 120);
   }
 
   function closeContactModal(event) {
+    if (!contactModal) return;
     if (event && event.target !== contactModal) return;
     contactModal.classList.remove('show');
     contactModal.setAttribute('aria-hidden', 'true');
@@ -1992,18 +1984,19 @@ nav {
     const tabs = document.querySelectorAll('[data-setup-tab]');
     const panels = document.querySelectorAll('[data-setup-panel]');
 
-    tabs.forEach(tab => {
+    tabs.forEach(function (tab) {
       const isActive = tab.dataset.setupTab === tabName;
       tab.classList.toggle('active', isActive);
       tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
     });
 
-    panels.forEach(panel => {
+    panels.forEach(function (panel) {
       panel.classList.toggle('active', panel.dataset.setupPanel === tabName);
     });
   }
 
   function openSetupModal() {
+    if (!setupModal) return;
     switchSetupTab('specifications');
     setupModal.classList.add('show');
     setupModal.setAttribute('aria-hidden', 'false');
@@ -2011,138 +2004,77 @@ nav {
   }
 
   function closeSetupModal(event) {
+    if (!setupModal) return;
     if (event && event.target !== setupModal) return;
     setupModal.classList.remove('show');
     setupModal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
   }
 
-  contactForm.addEventListener('submit', function(event) {
-    event.preventDefault();
-    const name = document.getElementById('contactName').value.trim();
-    const email = document.getElementById('contactEmail').value.trim();
-    const message = document.getElementById('contactMessage').value.trim();
+  if (contactForm) {
+    contactForm.addEventListener('submit', function (event) {
+      event.preventDefault();
 
-    if (!name || !email || !message) return;
+      const name = document.getElementById('contactName').value.trim();
+      const email = document.getElementById('contactEmail').value.trim();
+      const message = document.getElementById('contactMessage').value.trim();
 
-    alert('Message saved on the form. To actually receive messages, connect this form to Formspree, EmailJS, or a backend.');
-    contactForm.reset();
-    closeContactModal();
-  });
+      if (!name || !email || !message) return;
 
-  document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape' && contactModal.classList.contains('show')) {
+      alert('Message saved on the form. To actually receive messages, connect this form to Formspree, EmailJS, or a backend.');
+      contactForm.reset();
+      closeContactModal();
+    });
+  }
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && contactModal && contactModal.classList.contains('show')) {
       closeContactModal();
     }
-    if (event.key === 'Escape' && setupModal.classList.contains('show')) {
+
+    if (event.key === 'Escape' && setupModal && setupModal.classList.contains('show')) {
       closeSetupModal();
     }
   });
 
-  function goTo(id) {
-    const target = document.getElementById(id);
-    if (!target) return;
-
-    const nav = document.querySelector('nav');
-    const navOffset = nav ? nav.offsetHeight : 0;
-    const targetTop = target.getBoundingClientRect().top + window.scrollY - navOffset + 1;
-
-    window.scrollTo({
-      top: Math.max(0, targetTop),
-      behavior: 'smooth'
-    });
-  }
-
-  function updateNavHeightVar() {
-    const nav = document.querySelector('nav');
-    const height = nav ? nav.offsetHeight : 72;
-    document.documentElement.style.setProperty('--nav-height', height + 'px');
-  }
-
-  function goToAnchor(id) {
-    updateNavHeightVar();
-
-    if (id === 'hero') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-
-    const anchor = document.getElementById('anchor-' + id);
-    const target = anchor || document.getElementById(id);
-    if (!target) return;
-
-    target.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
-  }
-
-  function goToSection(id) {
-    goToAnchor(id);
-  }
-
-  function goToCentered(id) {
-    goToAnchor(id);
-  }
-
-  window.addEventListener('resize', updateNavHeightVar);
-  window.addEventListener('load', updateNavHeightVar);
-
-    return Math.max(0, absoluteTop - navOffset - 18);
-  }
+  function getSectionTargetTop(id) {
+    const section = document.getElementById(id);
+    if (!section) return 0;
+    if (id === 'hero') return 0;
 
     const content = document.getElementById('si-' + id) || section;
     const nav = document.querySelector('nav');
     const navOffset = nav ? nav.offsetHeight : 0;
     const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
     const availableHeight = viewportHeight - navOffset;
-    const contentRect = content.getBoundingClientRect();
+    const rect = content.getBoundingClientRect();
+    const absoluteTop = rect.top + window.scrollY;
+    const contentHeight = content.offsetHeight || rect.height;
 
-    let targetTop;
-
-    if (contentRect.height < availableHeight * 0.98) {
-      targetTop =
-        contentRect.top +
-        window.scrollY -
-        ((availableHeight - contentRect.height) / 2) -
-        navOffset +
-        8;
-    } else {
-      targetTop = contentRect.top + window.scrollY - navOffset - 18;
+    if (contentHeight < availableHeight * 0.98) {
+      return Math.max(0, absoluteTop - ((availableHeight - contentHeight) / 2) - navOffset + 8);
     }
 
+    return Math.max(0, absoluteTop - navOffset - 18);
+  }
+
+  function goToSection(id) {
     window.scrollTo({
-      top: Math.max(0, targetTop),
+      top: getSectionTargetTop(id),
       behavior: 'smooth'
     });
   }
-const content = document.getElementById('si-' + id) || section;
-    const nav = document.querySelector('nav');
-    const navOffset = nav ? nav.offsetHeight : 0;
-    const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
-    const contentRect = content.getBoundingClientRect();
-    const availableHeight = viewportHeight - navOffset;
 
-    let targetTop;
-
-    if (contentRect.height < availableHeight * 0.98) {
-      targetTop =
-        contentRect.top +
-        window.scrollY -
-        ((availableHeight - contentRect.height) / 2) -
-        navOffset +
-        8;
-    } else {
-      targetTop = contentRect.top + window.scrollY - navOffset - 18;
-    }
-
-    window.scrollTo({
-      top: Math.max(0, targetTop),
-      behavior: 'smooth'
-    });
+  function goToCentered(id) {
+    goToSection(id);
   }
-function setActiveNav(activeId) {
-    navItems.forEach(item => {
+
+  function goTo(id) {
+    goToSection(id);
+  }
+
+  function setActiveNav(activeId) {
+    navItems.forEach(function (item) {
       item.classList.toggle('active', item.dataset.target === activeId);
     });
   }
@@ -2151,12 +2083,15 @@ function setActiveNav(activeId) {
     const scrolled = window.scrollY || document.documentElement.scrollTop;
     const total = document.documentElement.scrollHeight - window.innerHeight;
     const progress = document.getElementById('progress');
-    progress.style.width = (total > 0 ? (scrolled / total) * 100 : 0) + '%';
+
+    if (progress) {
+      progress.style.width = (total > 0 ? (scrolled / total) * 100 : 0) + '%';
+    }
 
     const vh = window.innerHeight;
     let activeId = 'hero';
 
-    secs.forEach(id => {
+    secs.forEach(function (id) {
       const sec = document.getElementById(id);
       const si = document.getElementById('si-' + id);
       if (!sec || !si) return;
