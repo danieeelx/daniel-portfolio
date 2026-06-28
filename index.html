@@ -2045,17 +2045,23 @@ nav {
     const content = document.getElementById('si-' + id) || section;
     const nav = document.querySelector('nav');
     const navOffset = nav ? nav.offsetHeight : 0;
-    const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+
+    /*
+      Use layout positions instead of getBoundingClientRect().
+      getBoundingClientRect() includes the .si animation transform, so the
+      target changes after the section becomes visible. That is why tapping
+      About again could move the page slightly upward on mobile.
+    */
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
     const availableHeight = viewportHeight - navOffset;
-    const rect = content.getBoundingClientRect();
-    const absoluteTop = rect.top + window.scrollY;
-    const contentHeight = content.offsetHeight || rect.height;
+    const contentTop = section.offsetTop + content.offsetTop;
+    const contentHeight = content.offsetHeight;
 
     if (contentHeight < availableHeight * 0.98) {
-      return Math.max(0, absoluteTop - ((availableHeight - contentHeight) / 2) - navOffset + 8);
+      return Math.max(0, Math.round(contentTop - ((availableHeight - contentHeight) / 2) - navOffset + 8));
     }
 
-    return Math.max(0, absoluteTop - navOffset - 18);
+    return Math.max(0, Math.round(section.offsetTop - navOffset));
   }
 
   function goToSection(id) {
