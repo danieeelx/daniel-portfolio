@@ -2033,9 +2033,11 @@ nav {
     });
   }
 
-  function getSectionAnchorTop(id) {
+  function getSectionTargetTop(id) {
     const section = document.getElementById(id);
     if (!section) return 0;
+
+    if (id === 'hero') return 0;
 
     const content = document.getElementById('si-' + id) || section;
     const nav = document.querySelector('nav');
@@ -2043,22 +2045,22 @@ nav {
     const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
     const availableHeight = viewportHeight - navOffset;
 
-    const sectionTop = section.offsetTop;
-    const contentTop = sectionTop + content.offsetTop;
+    const absoluteTop = content.getBoundingClientRect().top + window.scrollY;
     const contentHeight = content.offsetHeight;
 
-    if (id === 'hero') return 0;
-
     if (contentHeight < availableHeight * 0.98) {
-      return Math.max(0, contentTop - ((availableHeight - contentHeight) / 2) - navOffset + 8);
+      return Math.max(
+        0,
+        absoluteTop - ((availableHeight - contentHeight) / 2) - navOffset + 8
+      );
     }
 
-    return Math.max(0, contentTop - navOffset - 18);
+    return Math.max(0, absoluteTop - navOffset - 18);
   }
 
   function goToSection(id) {
     window.scrollTo({
-      top: getSectionAnchorTop(id),
+      top: getSectionTargetTop(id),
       behavior: 'smooth'
     });
   }
@@ -2068,6 +2070,31 @@ nav {
   }
 
     const content = document.getElementById('si-' + id) || section;
+    const nav = document.querySelector('nav');
+    const navOffset = nav ? nav.offsetHeight : 0;
+    const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    const availableHeight = viewportHeight - navOffset;
+    const contentRect = content.getBoundingClientRect();
+
+    let targetTop;
+
+    if (contentRect.height < availableHeight * 0.98) {
+      targetTop =
+        contentRect.top +
+        window.scrollY -
+        ((availableHeight - contentRect.height) / 2) -
+        navOffset +
+        8;
+    } else {
+      targetTop = contentRect.top + window.scrollY - navOffset - 18;
+    }
+
+    window.scrollTo({
+      top: Math.max(0, targetTop),
+      behavior: 'smooth'
+    });
+  }
+const content = document.getElementById('si-' + id) || section;
     const nav = document.querySelector('nav');
     const navOffset = nav ? nav.offsetHeight : 0;
     const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
@@ -2092,8 +2119,7 @@ nav {
       behavior: 'smooth'
     });
   }
-
-  function setActiveNav(activeId) {
+function setActiveNav(activeId) {
     navItems.forEach(item => {
       item.classList.toggle('active', item.dataset.target === activeId);
     });
