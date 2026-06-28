@@ -2397,6 +2397,29 @@ nav {
       }
     }
 
+
+    /* Mobile Projects landing balance: show full 'what i built' tag */
+    @media (max-width: 560px) {
+      #projects {
+        padding-top: 76px;
+      }
+
+      #projects .tag {
+        line-height: 1.2;
+        margin-bottom: 9px;
+      }
+
+      #projects .rule {
+        margin-bottom: 16px;
+      }
+    }
+
+    @media (max-width: 390px) {
+      #projects {
+        padding-top: 78px;
+      }
+    }
+
 </style>
 </head>
 <body>
@@ -2864,8 +2887,8 @@ nav {
     const sectionTop = section.offsetTop;
     const offsets = {
       about: 16,
-      projects: 74,
-      contact: 74
+      projects: 46,
+      contact: 62
     };
 
     const extra = offsets[id] || 40;
