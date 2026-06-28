@@ -2557,6 +2557,54 @@ nav {
       color: var(--txt3) !important;
     }
 
+
+    /* Smooth modal entrance for Setup + Email */
+    .modal-backdrop {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition:
+        opacity 0.28s cubic-bezier(.22, .8, .25, 1),
+        visibility 0.28s cubic-bezier(.22, .8, .25, 1);
+    }
+
+    .modal-backdrop.show {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .modal-backdrop .contact-modal {
+      opacity: 0;
+      transform: translateY(14px) scale(0.965);
+      filter: blur(2px);
+      transition:
+        opacity 0.32s cubic-bezier(.22, .8, .25, 1),
+        transform 0.32s cubic-bezier(.22, .8, .25, 1),
+        filter 0.32s cubic-bezier(.22, .8, .25, 1);
+      will-change: opacity, transform, filter;
+    }
+
+    .modal-backdrop.show .contact-modal {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .modal-backdrop,
+      .modal-backdrop .contact-modal {
+        transition: none !important;
+        filter: none !important;
+      }
+
+      .modal-backdrop .contact-modal,
+      .modal-backdrop.show .contact-modal {
+        transform: none !important;
+        opacity: 1 !important;
+      }
+    }
+
 </style>
 </head>
 <body>
