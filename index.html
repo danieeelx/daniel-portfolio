@@ -2033,14 +2033,39 @@ nav {
     });
   }
 
-  function goToSection(id) {
+  function getSectionAnchorTop(id) {
     const section = document.getElementById(id);
-    if (!section) return;
+    if (!section) return 0;
 
-    if (id === 'hero') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
+    const content = document.getElementById('si-' + id) || section;
+    const nav = document.querySelector('nav');
+    const navOffset = nav ? nav.offsetHeight : 0;
+    const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    const availableHeight = viewportHeight - navOffset;
+
+    const sectionTop = section.offsetTop;
+    const contentTop = sectionTop + content.offsetTop;
+    const contentHeight = content.offsetHeight;
+
+    if (id === 'hero') return 0;
+
+    if (contentHeight < availableHeight * 0.98) {
+      return Math.max(0, contentTop - ((availableHeight - contentHeight) / 2) - navOffset + 8);
     }
+
+    return Math.max(0, contentTop - navOffset - 18);
+  }
+
+  function goToSection(id) {
+    window.scrollTo({
+      top: getSectionAnchorTop(id),
+      behavior: 'smooth'
+    });
+  }
+
+  function goToCentered(id) {
+    goToSection(id);
+  }
 
     const content = document.getElementById('si-' + id) || section;
     const nav = document.querySelector('nav');
@@ -2066,10 +2091,6 @@ nav {
       top: Math.max(0, targetTop),
       behavior: 'smooth'
     });
-  }
-
-  function goToCentered(id) {
-    goToSection(id);
   }
 
   function setActiveNav(activeId) {
