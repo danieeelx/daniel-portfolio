@@ -1656,6 +1656,23 @@ nav {
       }
     }
 
+  
+    /* Exact scroll anchors for matching nav/button pairs */
+    .scroll-anchor {
+      position: relative;
+      height: 0;
+      width: 100%;
+      pointer-events: none;
+      scroll-margin-top: calc(var(--nav-height, 72px) + 24px);
+    }
+
+    @media (max-width: 768px) {
+      .scroll-anchor {
+        scroll-margin-top: calc(var(--nav-height, 64px) + 20px);
+      }
+    }
+
+
   </style>
 </head>
 <body>
@@ -1665,10 +1682,10 @@ nav {
 <nav>
 <div class="nav-right">
     <ul class="nlinks">
-    <li data-target="hero" onclick="goToSection('hero')">Home</li>
-    <li data-target="about" onclick="goToSection('about')">About</li>
-      <li data-target="projects" onclick="goToSection('projects')">Projects</li>
-      <li data-target="contact" onclick="goToSection('contact')">Contact</li>
+    <li data-target="hero" onclick="goToAnchor('hero')">Home</li>
+    <li data-target="about" onclick="goToAnchor('about')">About</li>
+      <li data-target="projects" onclick="goToAnchor('projects')">Projects</li>
+      <li data-target="contact" onclick="goToAnchor('contact')">Contact</li>
     </ul>
     <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch theme" title="Switch theme">
       <svg class="moon-icon theme-svg" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
@@ -1688,7 +1705,7 @@ nav {
     <h1>HEY I'M<br><span>DANIEL</span></h1>
     <div class="subrole">Gamer · Tech</div>
     <div class="btns hero-btns-single">
-      <button class="bp" onclick="goToSection('about')">Explore</button>
+      <button class="bp" onclick="goToAnchor('about')">Explore</button>
     </div>
   </div>
 </section>
@@ -1697,6 +1714,7 @@ nav {
 
 <!-- ABOUT -->
 <section id="about">
+  <div class="scroll-anchor" id="anchor-about"></div>
   <div class="si" id="si-about">
     <div class="tag">who i am</div>
     <div class="rule"></div>
@@ -1706,7 +1724,7 @@ nav {
       <div class="ab-body">Currently working as a ServiceNow developer, creating things I think are cool and writing about whatever else is on my mind.</div>
     </div>
     <div class="stat-row">
-      <div class="stat-card clickable" onclick="goToSection('projects')" role="button" tabindex="0" onkeydown="if(event.key === 'Enter' || event.key === ' ') goToSection('projects')" aria-label="Go to projects section">
+      <div class="stat-card clickable" onclick="goToAnchor('projects')" role="button" tabindex="0" onkeydown="if(event.key === 'Enter' || event.key === ' ') goToAnchor('projects')" aria-label="Go to projects section">
         <div class="stat-num">1</div>
         <div class="stat-lbl">Projects</div>
       </div>
@@ -1722,6 +1740,7 @@ nav {
 
 <!-- PROJECTS -->
 <section id="projects">
+  <div class="scroll-anchor" id="anchor-projects"></div>
   <div class="si" id="si-projects">
     <div class="tag">what i built</div>
     <div class="rule"></div>
@@ -1743,7 +1762,7 @@ nav {
       </div>
     </div>
     <div class="project-contact-cta">
-      <button class="project-contact-link" type="button" onclick="goToSection('contact')">Get in touch</button>
+      <button class="project-contact-link" type="button" onclick="goToAnchor('contact')">Get in touch</button>
     </div>
   </div>
 </section>
@@ -1752,6 +1771,7 @@ nav {
 
 <!-- CONTACT -->
 <section id="contact">
+  <div class="scroll-anchor" id="anchor-contact"></div>
   <div class="si" id="si-contact">
     <div class="tag">let's connect</div>
     <div class="rule"></div>
@@ -2033,40 +2053,42 @@ nav {
     });
   }
 
-  function getSectionTargetTop(id) {
-    const section = document.getElementById(id);
-    if (!section) return 0;
-
-    if (id === 'hero') return 0;
-
-    const content = document.getElementById('si-' + id) || section;
+  function updateNavHeightVar() {
     const nav = document.querySelector('nav');
-    const navOffset = nav ? nav.offsetHeight : 0;
-    const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
-    const availableHeight = viewportHeight - navOffset;
-
-    const absoluteTop = content.getBoundingClientRect().top + window.scrollY;
-    const contentHeight = content.offsetHeight;
-
-    if (contentHeight < availableHeight * 0.98) {
-      return Math.max(
-        0,
-        absoluteTop - ((availableHeight - contentHeight) / 2) - navOffset + 8
-      );
-    }
-
-    return Math.max(0, absoluteTop - navOffset - 18);
+    const height = nav ? nav.offsetHeight : 72;
+    document.documentElement.style.setProperty('--nav-height', height + 'px');
   }
 
-  function goToSection(id) {
-    window.scrollTo({
-      top: getSectionTargetTop(id),
-      behavior: 'smooth'
+  function goToAnchor(id) {
+    updateNavHeightVar();
+
+    if (id === 'hero') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    const anchor = document.getElementById('anchor-' + id);
+    const target = anchor || document.getElementById(id);
+    if (!target) return;
+
+    target.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
     });
   }
 
+  function goToSection(id) {
+    goToAnchor(id);
+  }
+
   function goToCentered(id) {
-    goToSection(id);
+    goToAnchor(id);
+  }
+
+  window.addEventListener('resize', updateNavHeightVar);
+  window.addEventListener('load', updateNavHeightVar);
+
+    return Math.max(0, absoluteTop - navOffset - 18);
   }
 
     const content = document.getElementById('si-' + id) || section;
