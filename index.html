@@ -2420,6 +2420,66 @@ nav {
       }
     }
 
+
+
+    /* Light mode modal readability fixes */
+    html[data-theme="light"] .contact-modal,
+    html[data-theme="light"] .setup-modal {
+      background: linear-gradient(180deg, rgba(245,240,251,0.98) 0%, rgba(238,231,248,0.98) 100%);
+      border-color: rgba(107,93,136,0.24);
+      color: var(--txt);
+    }
+
+    html[data-theme="light"] .setup-tabs {
+      border-bottom-color: rgba(107,93,136,0.18) !important;
+    }
+
+    html[data-theme="light"] .setup-tab {
+      color: var(--txt3);
+    }
+
+    html[data-theme="light"] .setup-tab.active {
+      color: var(--txt);
+    }
+
+    html[data-theme="light"] .setup-tab.active::after {
+      background: linear-gradient(90deg, var(--acc2), var(--acc));
+    }
+
+    html[data-theme="light"] .spec-row,
+    html[data-theme="light"] .spec-row:first-child {
+      border-color: rgba(107,93,136,0.16);
+    }
+
+    html[data-theme="light"] .spec-label,
+    html[data-theme="light"] .spec-icon,
+    html[data-theme="light"] .field label,
+    html[data-theme="light"] .field-label-icon {
+      color: #2563eb;
+    }
+
+    html[data-theme="light"] .spec-value,
+    html[data-theme="light"] .contact-modal .field-shell input,
+    html[data-theme="light"] .contact-modal .field-shell textarea {
+      color: var(--txt) !important;
+    }
+
+    html[data-theme="light"] .field-shell {
+      background: rgba(255,255,255,0.62);
+      border-color: rgba(107,93,136,0.18);
+    }
+
+    html[data-theme="light"] .field-shell:focus-within {
+      background: rgba(255,255,255,0.82);
+      border-color: rgba(59,130,246,0.28);
+    }
+
+    html[data-theme="light"] .contact-modal .field-shell input::placeholder,
+    html[data-theme="light"] .contact-modal .field-shell textarea::placeholder {
+      color: var(--txt3) !important;
+      opacity: 1;
+    }
+
 </style>
 </head>
 <body>
