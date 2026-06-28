@@ -1669,10 +1669,10 @@ nav {
 <nav>
 <div class="nav-right">
     <ul class="nlinks">
-    <li data-target="hero" onclick="goTo('hero')">Home</li>
-    <li data-target="about" onclick="goTo('about')">About</li>
-      <li data-target="projects" onclick="goTo('projects')">Projects</li>
-      <li data-target="contact" onclick="goTo('contact')">Contact</li>
+    <li data-target="hero" onclick="goToCentered('hero')">Home</li>
+    <li data-target="about" onclick="goToCentered('about')">About</li>
+      <li data-target="projects" onclick="goToCentered('projects')">Projects</li>
+      <li data-target="contact" onclick="goToCentered('contact')">Contact</li>
     </ul>
     <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch theme" title="Switch theme">
       <svg class="moon-icon theme-svg" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
@@ -1747,7 +1747,7 @@ nav {
       </div>
     </div>
     <div class="project-contact-cta">
-      <button class="project-contact-link" type="button" onclick="goTo('contact')">Get in touch</button>
+      <button class="project-contact-link" type="button" onclick="goToCentered('contact')">Get in touch</button>
     </div>
   </div>
 </section>
@@ -2035,12 +2035,22 @@ nav {
     const navOffset = nav ? nav.offsetHeight : 0;
     const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
     const contentRect = content.getBoundingClientRect();
+    const availableHeight = viewportHeight - navOffset;
 
-    const targetTop =
-      contentRect.top +
-      window.scrollY -
-      ((viewportHeight - contentRect.height) / 2) -
-      (navOffset / 2);
+    let targetTop;
+
+    if (id === 'hero') {
+      targetTop = 0;
+    } else if (contentRect.height >= availableHeight * 0.92) {
+      targetTop = contentRect.top + window.scrollY - navOffset - 18;
+    } else {
+      targetTop =
+        contentRect.top +
+        window.scrollY -
+        ((availableHeight - contentRect.height) / 2) -
+        navOffset +
+        8;
+    }
 
     window.scrollTo({
       top: Math.max(0, targetTop),
