@@ -1475,8 +1475,6 @@ nav {
       }
     }
 
-
-
   
     /* Ultra-minimal modal skin */
     .contact-modal {
@@ -1582,7 +1580,6 @@ nav {
       }
     }
 
-
   
     /* Ultra-minimal setup text tabs */
     .setup-tabs {
@@ -1659,7 +1656,6 @@ nav {
       }
     }
 
-
   </style>
 </head>
 <body>
@@ -1669,10 +1665,10 @@ nav {
 <nav>
 <div class="nav-right">
     <ul class="nlinks">
-    <li data-target="hero" onclick="goToCentered('hero')">Home</li>
-    <li data-target="about" onclick="goToCentered('about')">About</li>
-      <li data-target="projects" onclick="goToCentered('projects')">Projects</li>
-      <li data-target="contact" onclick="goToCentered('contact')">Contact</li>
+    <li data-target="hero" onclick="goToSection('hero')">Home</li>
+    <li data-target="about" onclick="goToSection('about')">About</li>
+      <li data-target="projects" onclick="goToSection('projects')">Projects</li>
+      <li data-target="contact" onclick="goToSection('contact')">Contact</li>
     </ul>
     <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch theme" title="Switch theme">
       <svg class="moon-icon theme-svg" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
@@ -1692,7 +1688,7 @@ nav {
     <h1>HEY I'M<br><span>DANIEL</span></h1>
     <div class="subrole">Gamer · Tech</div>
     <div class="btns hero-btns-single">
-      <button class="bp" onclick="goToCentered('about')">Explore</button>
+      <button class="bp" onclick="goToSection('about')">Explore</button>
     </div>
   </div>
 </section>
@@ -1710,7 +1706,7 @@ nav {
       <div class="ab-body">Currently working as a ServiceNow developer, creating things I think are cool and writing about whatever else is on my mind.</div>
     </div>
     <div class="stat-row">
-      <div class="stat-card clickable" onclick="goTo('projects')" role="button" tabindex="0" onkeydown="if(event.key === 'Enter' || event.key === ' ') goTo('projects')" aria-label="Go to projects section">
+      <div class="stat-card clickable" onclick="goToSection('projects')" role="button" tabindex="0" onkeydown="if(event.key === 'Enter' || event.key === ' ') goToSection('projects')" aria-label="Go to projects section">
         <div class="stat-num">1</div>
         <div class="stat-lbl">Projects</div>
       </div>
@@ -1747,7 +1743,7 @@ nav {
       </div>
     </div>
     <div class="project-contact-cta">
-      <button class="project-contact-link" type="button" onclick="goToCentered('contact')">Get in touch</button>
+      <button class="project-contact-link" type="button" onclick="goToSection('contact')">Get in touch</button>
     </div>
   </div>
 </section>
@@ -1887,6 +1883,17 @@ nav {
 </div>
 
 <script>
+
+  // Start at Home when the page is refreshed/reloaded.
+  if (window.performance && performance.getEntriesByType) {
+    const navEntry = performance.getEntriesByType('navigation')[0];
+    if (navEntry && navEntry.type === 'reload') {
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+      window.scrollTo(0, 0);
+      requestAnimationFrame(() => window.scrollTo(0, 0));
+    }
+  }
+
   const root = document.documentElement;
   const themeToggle = document.getElementById('themeToggle');
   function applyTheme(theme) {
@@ -2026,9 +2033,14 @@ nav {
     });
   }
 
-  function goToCentered(id) {
+  function goToSection(id) {
     const section = document.getElementById(id);
     if (!section) return;
+
+    if (id === 'hero') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
 
     const content = document.getElementById('si-' + id) || section;
     const nav = document.querySelector('nav');
@@ -2039,37 +2051,25 @@ nav {
 
     let targetTop;
 
-    if (id === 'hero') {
-      targetTop = 0;
-    } else if (id === 'projects') {
-      // Projects should show the whole card area, including "what i built" and "Get in touch".
-      if (contentRect.height < availableHeight * 0.98) {
-        targetTop =
-          contentRect.top +
-          window.scrollY -
-          ((availableHeight - contentRect.height) / 2) -
-          navOffset +
-          8;
-      } else {
-        targetTop = contentRect.top + window.scrollY - navOffset - 18;
-      }
-    } else if (id === 'contact') {
-      targetTop = contentRect.top + window.scrollY - navOffset - 22;
-    } else if (contentRect.height >= availableHeight * 0.92) {
-      targetTop = contentRect.top + window.scrollY - navOffset - 18;
-    } else {
+    if (contentRect.height < availableHeight * 0.98) {
       targetTop =
         contentRect.top +
         window.scrollY -
         ((availableHeight - contentRect.height) / 2) -
         navOffset +
         8;
+    } else {
+      targetTop = contentRect.top + window.scrollY - navOffset - 18;
     }
 
     window.scrollTo({
       top: Math.max(0, targetTop),
       behavior: 'smooth'
     });
+  }
+
+  function goToCentered(id) {
+    goToSection(id);
   }
 
   function setActiveNav(activeId) {
